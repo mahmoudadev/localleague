@@ -1,0 +1,7 @@
+.idea/
+.coverage
+*.py[co]
+.Python
+.DS_Store
+*.cnf
+*.sqlite3

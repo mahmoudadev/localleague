@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>landlord</title>
+</head>
+
+
+<body>
+
+
+<div class="navbar">
+     <a class="active" href="homepage.html"><i class="fa fa-fw fa-home"></i> Home</a>
+     <a href="about.html"><i class="fa fa-fw fa-envelope"></i> About Us</a>
+     <a href="contact.html"><i class="fa fa-fw fa-envelope"></i>Contact</a>
+     <a href="SpnsPg.html">Packages</a>
+     <a href="Landlord.html">Fields</a>
+     <a href="TeamLeader.html">Teams</a>
+     <a href="Registration.html"><i class="fa fa-fw fa-user"></i>Registration</a>
+     <a href="#" ><i class="fa fa-fw fa-user"></i>Login </a>
+     <a href="#"><i class="fa fa-fw fa-search"></i> Search</a>
+</div>
+<div class="head">
+    <div class="center">Landlord Name</div>
+</div>
+<style>
+    body{
+    font-family:Sans-serif;
+    }
+    .head{
+    display: flex;
+    justify-content: center;
+    text-align:center;
+    z-index: -1;
+    min-height: 600px;
+    background: linear-gradient(0deg, rgba(6, 0, 1, 0.6), rgba(6, 0, 1, 0.6)), url(back.jpg) no-repeat scroll;
+    display: flex;
+    background-size: cover;
+    margin-left: -1%;
+    margin-right: -1%;
+    margin-top: -1%;
+    }
+    .center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    font-size: 80px;
+    transform: translate(-50%, -100%);
+    }
+     .Head{
+    text-align:center;
+    }
+    .fieldInformation{
+    margin-top:50px;
+    }
+</style>
+
+    <!-- Slide Show -->
+<div class="Head">
+    <h1 style="padding-top: 20px;">Field Information</h1>
+    <hr style="width:60%;">
+</div>
+<div class="fieldInformation">
+    <section>
+        <center>
+            <img class="mySlides" src="img1.jpg" style="width=400px;height:400px" />
+        </center>
+        <center>
+            <img class="mySlides" src="img2.jpg" style="width=400px;height:400px" />
+        </center>
+        <center>
+            <img class="mySlides" src="img3.jpg" style="width=400px;height:400px" />
+        </center>
+    </section>
+</div>
+<script>
+    // change image every 3 seconds
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}
+    x[myIndex-1].style.display = "block";
+    setTimeout(carousel, 3000);
+}
+    function AddBut(n)
+    {
+
+    if (n==1)
+    window.location.href = "addNewField.html";
+    }
+</script>
+
+<div class="tableField">
+    <div class="setting" id="AddBut"onclick="AddBut(1)" >Add Field</div>
+    <table class="Table">
+        <tr>
+            <th>Area</th>
+            <th>Location</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td> 100M length 45M width </td>
+            <td style="border-left:1px solid #fff;border-right:1px solid #fff;">
+                <a href="http://google.com">
+                    <img src="LocationPin.png" style=" width:100px;height:100px;margin:20px;" />
+                </a>
+            </td>
+            <td style="width:60%"> is the playing surface for the game of association football. Its dimensions and markings are defined
+                by Law 1 of the Laws of the Game, "The Field of Play".[2] The surface can either be natural or artificial.
+                Artificial surfaces must be green in colour. The pitch is typically made of turf (grass) or artificial turf,
+                although amateur and recreational teams often play on dirt fields.
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="HQ">
+<div class="Q">
+    <div>
+        <p style="font-size:30px;color:#fff;text-align:center;padding-left:10px;">For more information
+            <a style="font-size:40px;" href="mailto:rawan_mo7ammed@hotmail.com">click here</a>
+        </p>
+    </div>
+</div>
+</div>
+<style>
+    .tableField{
+    background-color: #142E20;
+    background-size:100% auto;
+    margin-top:50px;
+    padding:30px;
+    margin-left:-1%;
+    margin-right:-1%;
+    }
+    .Table{
+    justify-content: center;
+    text-align:center;
+    align-item:center;
+    display:flex;
+    color:#fff;
+    }
+    td{
+    font-size:20px;
+    padding:20px;
+    }
+    th{
+    font-size:30px;
+    }
+    .Q{
+    width:60%;
+    background-color: #DE8A00;
+    margin-top:-2%;
+    justify-content: center;
+    align-items: center;
+    }
+    .HQ{
+    justify-content: center;
+    align-items: center;
+    display:flex;
+    }
+    .setting{
+    margin-top:-5%;
+    position: absolute;
+    right: 0;
+    font-size: 16px;
+    margin-right:10px;
+    padding-top:50px;
+    cursor:pointer;
+    color:#FFC300;
+    }
+    .setting:hover{
+    color:#fff ;
+    }
+</style>
+
+<div class="Head">
+    <h1 style="padding-top: 80px;font-size:40px;">New League Request</h1>
+    <hr style="width:60%;">
+</div>
+
+<div class="league">
+    <table style="padding: 30px 0;text-align:center;color:#fff;width:100%;">
+        <tr>
+            <td style="font-size:30px;">Between who</td>
+            <td style="font-size:30px;border-left:1px solid white;border-right:1px solid white;padding-right:20px;padding-left:20px;">Location</td>
+            <td style="font-size:30px;">Date and Time</td>
+        </tr>
+    </table>
+    <div class="bottomLeague">
+    <button class="accept" id="paymentClick">Accept</button>
+    <button class="reject" style="">Reject</button>
+    </div>
+</div>
+<style>
+    .league{
+    background-color: #333;
+    background-size:100% auto;
+    margin-top:50px;
+    margin-bottom:150px;
+    margin-left:-1%;
+    margin-right:-1%;
+
+    }
+    .accept{
+    background: #437946;
+    border: transparent;
+    text-align: center;
+    font-size:18px;
+    padding: 5px 45px;
+    border-radius: 5px;
+    color:#fff;
+    margin:30px;
+    }
+    .reject{
+    background: #DE8A00;
+    border: transparent;
+    text-align: center;
+    font-size:18px;
+    padding: 5px 45px;
+    border-radius: 5px;
+    color:#fff;
+    margin:30px;
+    }
+    .bottomLeague{
+    justify-content: center;
+    text-align:center;
+    align-item:center;
+    display:flex;
+    }
+</style>
+
+<footer>
+    <div class="Quick">
+        <div class="column" style=" width:25%;;margin:10px;">
+            <h2>Quick Links</h2>
+            <ul>
+                <li><a href="/accounts">Home</a></li>
+                <li><a href="">News</a></li>
+                <li><a href="">Contact</a></li>
+                <li><a href="">About</a></li>
+            </ul>
+        </div>
+        <div class="column"  style=" width:25%; text-align: center;margin:10px;" >
+        <h2>About Us</h2>
+        <p style="font-size:20px; color:#aaa; text-align: justify;">We are an organization dedicated to providing recreational activities,
+            promoting citizenship, and improving the lives of youths all through-out the community.</p>
+
+        </div>
+        <div class="column" style="margin:10px;width:25%;" >
+
+<section id="lab_social_icon_footer">
+    <div class="container2">
+        <div class="text-center center-block">
+                <a href="https://www.facebook.com"><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
+	            <a href="https://twitter.com"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
+	            <a href="https://plus.google.com"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
+	            <a href="mailto:miy1614@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+    </div>
+</div>
+</section>
+  </div>
+        <div class="column" style="margin:10px;width:25%;">
+            <form  style="text-align: center;" action="">
+                <div class="">
+                    <h2 style="">Subscribe to our Newsletter</h2>
+                </div>
+
+                <div class="" >
+                    <input type="text" placeholder="Email address" name="mail" required><br>
+                    <label style="color:#fff; size:14;">
+                        <input type="checkbox" checked="checked" name="subscribe" > Daily Newsletter
+                    </label>
+                </div>
+
+                <div class="">
+                    <input type="submit" value="Subscribe">
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</footer>
+<style>
+    .Quick{
+    justify-content: center;
+    align-items: center;
+    background-color:#000;
+    float:left;
+    margin-left: -1%;
+    margin-right: -1%;
+    display:flex;
+    }
+    h2{
+    color:#fff;
+    padding:10px;
+    }
+    ul{
+    list-style-type: none;
+    font-color: #fff;
+    text-align:left;
+    }
+    li{
+    font-size:20px;
+    padding-bottom:5px;
+    }
+    input[type=text]{
+    width:100%;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size:16px;
+    padding:5px;
+    }
+    input[type=submit]{
+    width:30%;
+    height: 40px;
+    border-radius: 3px;
+    border:transparent;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size:16px;
+    color:#fff;
+    background-color: #da8600;
+    padding:5px;
+    }
+     a{
+    padding:10px;
+    color: #fff;
+    text-decoration: none;
+    }
+    a:hover{
+    color: #FFC300;
+    }
+
+
+</style>
+<style>
+    .navbar{
+    position:absolute;
+    width:100%;
+    left:0;
+    padding:20px;
+    }
+    a{
+    padding:10px;
+    color: #fff;
+    text-decoration: none;
+    }
+    a:hover{
+    color: #FFC300;
+    }
+
+</style>
+
+</body>
+
+
+</html>

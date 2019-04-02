@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title> Adding new field </title>
+    <style>
+        {
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-image: url('112.jpg');
+            background-filter: blur(8px);
+            background-size: cover;
+            background-attachment: fixed;
+
+        }
+        .form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #form {
+            border: 3px solid #f1f1f1;
+            margin: 100px auto;
+            font-family: Raleway;
+            padding: 40px;
+            width: 50%;
+            min-width: 300px;
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0, 0.4);
+        }
+
+        label {
+            color: #fff;
+            margin-top: 10px;
+        }
+        h1 {
+            color: #fff;
+            margin-top: 15px;
+            text-align:center;
+        }
+        #fileupload
+        {
+            color: white;
+        }
+
+        input[type=text] {
+            width: 45%;
+            height: 30px;
+            font-size: 15px;
+            margin: 10px;
+            border-radius: 3px;
+            border: transparent;
+            padding: 3px;
+        }
+       
+
+        input[type=file] {
+            width: 45%;
+            height: 30px;
+            font-size: 15px;
+            margin: 10px;
+
+    border-radius: 3px;
+    border:transparent;
+    padding:3px;
+    }
+    input[type=number]{
+    width:45%;
+    height:30px;
+    font-size: 15px;
+    margin:10px;
+    border-radius: 3px;
+    border:transparent;
+    padding:3px;
+    }
+        input[type=url] {
+            width: 45%;
+            height: 30px;
+            font-size: 15px;
+            margin: 10px;
+            border-radius: 3px;
+            border: transparent;
+            padding: 3px;
+        }
+        input[type=reset] {
+            border-radius: 3px;
+            border: transparent;
+            padding: 5px 30px;
+            font-size: 18px;
+            background-color: #437946;
+            color: #fff;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
+        }
+        input[type=submit] {
+            border-radius: 3px;
+            border: transparent;
+            padding: 5px 30px;
+            background-color: #E89C05;
+            font-size: 18px;
+            color: #fff;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); 
+        }
+    </style>
+</head>
+    <body>
+        <form id="form" action="myform.cgi">
+            <h1>Add new field </h1>
+            <label> Selelct images to upload </label>
+             <br /><hr />
+            <br /> <input type="file" name="fileupload" value="imageupload" id="fileupload">
+            <br /> <input type="file" name="fileupload" value="imageupload" id="fileupload"> 
+            <br /> <input type="file" name="fileupload" value="imageupload" id="fileupload">
+            <br /> <input type="text" placeholder="Area" />
+            <br /> <input type="url" placeholder="Location"/>
+           <br /> <br /> <lable style="color:white;">Field description :</lable>
+            <br />
+            <br /><hr /><br />
+             <textarea rows="10" cols="30">  </textarea> 
+            <br /><br /> <hr />
+            <input type="submit" value="submit"/>
+            <input type="reset" value="clear" />
+           </form>
+</body>
+</html>

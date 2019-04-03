@@ -1,31 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <meta charset="UTF-8">
-    <title>About</title>
-</head>
-<body>
-<div class="navbar">
-     <a class="active" href="homepage.html"><i class="fa fa-fw fa-home"></i> Home</a>
-     <a href="about.html"><i class="fa fa-fw fa-envelope"></i> About Us</a>
-     <a href="contact.html"><i class="fa fa-fw fa-envelope"></i>Contact</a>
-     <a href="SpnsPg.html">Packages</a>
-     <a href="Landlord.html">Fields</a>
-     <a href="TeamLeader.html">Teams</a>
-     <a href="Registration.html"><i class="fa fa-fw fa-user"></i>Registration</a>
-     <a href="#" ><i class="fa fa-fw fa-user"></i>Login </a>
-     <a href="#"><i class="fa fa-fw fa-search"></i> Search</a>
-</div>
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block title %}About{% endblock %}
+
+{% block content %}
 <div class="head">
     <div class="center">About Us</div>
 </div>
 
 <div class="HSection">
     <div class="HCard">
-        <img src="aboutus.jpg" style="width:500px; height:500px;float:left;margin-right:20px;">
+        <img src="{% static 'website/images/aboutus.jpg' %}" style="width:500px; height:500px;float:left;margin-right:20px;">
     <div class="container">
         <h3 style="font-size:30px;">We believe in the love and sense of football,that brings joy to those who play and watch.</h3>
         <p style="font-size:20px;">
@@ -72,58 +58,6 @@
     </div>
 </div>
 
-<footer>
-    <div class="Quick">
-        <div class="column" style=" width:25%;;margin:10px;">
-            <h2>Quick Links</h2>
-            <ul>
-                <li><a href="/accounts">Home</a></li>
-                <li><a href="">News</a></li>
-                <li><a href="">Contact</a></li>
-                <li><a href="">About</a></li>
-            </ul>
-        </div>
-        <div class="column"  style=" width:25%; text-align: center;margin:10px;" >
-        <h2>About Us</h2>
-        <p style="font-size:20px; color:#aaa; text-align: justify;">We are an organization dedicated to providing recreational activities,
-            promoting citizenship, and improving the lives of youths all through-out the community.</p>
-
-        </div>
-        <div class="column" style="margin:10px;width:25%;" >
-
-<section id="lab_social_icon_footer">
-    <div class="container2">
-        <div class="text-center center-block">
-                <a href="https://www.facebook.com"><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
-	            <a href="https://twitter.com"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
-	            <a href="https://plus.google.com"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
-	            <a href="mailto:miy1614@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
-    </div>
-</div>
-</section>
-  </div>
-        <div class="column" style="margin:10px;width:25%;">
-            <form  style="text-align: center;" action="">
-                <div class="">
-                    <h2 style="">Subscribe to our Newsletter</h2>
-                </div>
-
-                <div class="" >
-                    <input type="text" placeholder="Email address" name="mail" required><br>
-                    <label style="color:#fff; size:14;">
-                        <input type="checkbox" checked="checked" name="subscribe" > Daily Newsletter
-                    </label>
-                </div>
-
-                <div class="">
-                    <input type="submit" value="Subscribe">
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-</footer>
 <style>
     body{
     font-family:Sans-serif;
@@ -180,7 +114,7 @@
     text-align:center;
     z-index: -1;
     min-height: 600px;
-    background: linear-gradient(0deg, rgba(6, 0, 0, 0.5), rgba(6, 0, 0, 0.5)), url(111.jpeg) no-repeat scroll;
+    background: linear-gradient(0deg, rgba(6, 0, 0, 0.5), rgba(6, 0, 0, 0.5)), url({% static 'website/images/111.jpeg' %}) no-repeat scroll;
     display: flex;
     background-size: cover;
     margin-left: -1%;
@@ -217,23 +151,5 @@
 
 
 </style>
-<style>
-    .navbar{
-    position:absolute;
-    width:100%;
-    left:0;
-    padding:20px;
-    }
-    a{
-    padding:10px;
-    color: #fff;
-    text-decoration: none;
-    }
-    a:hover{
-    color: #FFC300;
-    }
 
-</style>
-
-</body>
-</html>
+{% endblock %}

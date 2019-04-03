@@ -27,7 +27,7 @@ class Match(models.Model):
     round = models.ForeignKey(Round, related_name='matches', on_delete=models.CASCADE)
     away = models.ForeignKey(Team, related_name='away_matches', blank=True, null=True, on_delete=models.CASCADE)
     away_score = models.PositiveSmallIntegerField(blank=True)
-    home = models.ForeignKey(Team, related_name='home_matches', blank=True, null=True)
+    home = models.ForeignKey(Team, related_name='home_matches', blank=True, null=True, on_delete=models.CASCADE)
     home_score = models.PositiveSmallIntegerField(blank=True)
     play_by = models.DateTimeField()
     date = models.DateTimeField(blank=True)

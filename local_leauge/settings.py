@@ -41,6 +41,8 @@ INSTALLED_APPS = [
 
     'core',
     'teams',
+    'leagues',
+    'fields',
 ]
 
 MIDDLEWARE = [

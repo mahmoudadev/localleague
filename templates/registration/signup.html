@@ -1,99 +1,61 @@
-﻿{% load static %}
-<!DOCTYPE html>
-<html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+﻿{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <title>Login</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<style>
-    .Registration {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        top: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+    <!------ Include the above in your HEAD tag ---------->
 
-    body {
-        font-family: Sans-serif;
-        background-image: url({% static 'website/images/112.jpg' %});
-        background-filter: blur(8px);
-        background-size: cover;
-        background-attachment: fixed;
-    }
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #17a2b8;
+            height: 100%;
+        }
 
-    form {
-        background-color: rgb(0, 0, 0); /* Fallback color */
-        background-color: rgba(0, 0, 0, 0.4);
-        border: 3px solid #f1f1f1;
-        font-family: Raleway;
-        padding: 40px;
-        width: 50%;
-        min-width: 300px;
-    }
+        #login .container #login-row #login-column #login-box {
+            margin-top: 50px;
+            max-width: 600px;
+            height: auto;
+            border: 1px solid #9C9C9C;
+            background-color: #EAEAEA;
+        }
 
-    input {
-        padding: 10px;
-        width: 100%;
-        font-size: 17px;
-        font-family: Raleway;
-    }
+        #login .container #login-row #login-column #login-box #login-form {
+            padding: 20px;
+        }
 
-    .tab {
-        display: none;
-    }
-
-    button {
-        background-color: #437946;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        font-size: 17px;
-        font: Raleway;
-    }
-
-    #previouBtton {
-        background-color: #E89C05;
-    }
-
-    .step {
-        height: 15px;
-        width: 15px;
-        background-color: #DED8D4;
-        border-radius: 50%;
-        display: inline-block;
-    }
-
-    .step.finish {
-        background-color: green;
-    }
-
-    p {
-        color: white;
-    }
-
-    label {
-        color: white;
-    }
-</style>
+        #login .container #login-row #login-column #login-box #login-form #register-link {
+            margin-top: -66px;
+        }
+    </style>
+</head>
 <body>
+<div id="login">
+    <h3 class="text-center text-white pt-5">Register to our Local League system</h3>
+    <div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                    <form id="login-form" class="form" action="{% url 'accounts:signup' %}" method="post">
+                        <h3 class="text-center text-info">Register</h3>
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-info btn-md" value="Login">
+                        </div>
 
-<div class="Registration">
-    <form id="Form" method="post" action="{% url 'accounts:signup' %}">
-        {% csrf_token %}
-        <input type="hidden" name="recepient" value="215022792@kfu.edu.sa"/>
-        <input type="hidden" name="subject" value="feedbackform"/>
-        <input type="hidden" name="redirect"/>
-        <h1 style="color:#fff;">
-            <center>Registration:</center>
-        </h1>
-
-        {{ form.as_p }}
-
-        <input type="submit" value="Signup">
-
-    </form>
+                        <div id="register-link" class="text-right">
+                            <a href="{% url 'login'  %}" class="text-info">Login here</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

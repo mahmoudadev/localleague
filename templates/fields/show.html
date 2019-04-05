@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Field Page
+{% endblock %}
+
+{% block content %}
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Portfolio Item Heading -->
+        <h1 class="my-4">{{ item.name }}
+            <small>{{ item.location }}</small>
+        </h1>
+        {% if request.user == item.owner.user %}
+            <div class="row">
+                <div class="col-12">
+                    <a href="{% url 'fields:edit' item.id %}" class="btn btn-outline-secondary pull-right">Edit</a>
+                </div>
+            </div>
+        {% endif %}
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+            <div class="col-md-8">
+                <img class="img-fluid" src="{{ item.image_set.first.image.url }}" alt="">
+            </div>
+
+            <div class="col-md-4">
+                <h3 class="my-3">Field Description</h3>
+                <p>{{ item.description }}.</p>
+                <h3 class="my-3">Field Details</h3>
+                <ul>
+                    <li><span class="pr-3">Area</span> <span class="text-muted">{{ item.area }}</span></li>
+                    <li><span class="pr-3">Location</span> <span class="text-muted">{{ item.location }}</span></li>
+                    <li><span class="pr-3">Owner</span> <a href="{% url 'players:show_profile' item.owner.user.id %}"
+                                                           class="text-muted">{{ item.owner.user }}</a></li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <!-- Related Projects Row -->
+        <h3 class="my-4">Field Images</h3>
+
+        <div class="row">
+
+            {% for img in item.image_set.all %}
+                {% if img.image %}
+
+
+                    <div class="col mb-4">
+                        <a href="#">
+                            <img class="img-fluid" src="{{ img.image.url }}" alt="">
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+{% endblock %}

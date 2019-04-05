@@ -9,8 +9,6 @@ core_urlpatterns = ([
 
 ], 'core')
 
-
-
 urlpatterns = [
     path('', include(core_urlpatterns))
 ]

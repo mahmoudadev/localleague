@@ -1,0 +1,218 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Player Page
+{% endblock %}
+
+{% block content %}
+
+    <hr>
+    <div class="container bootstrap snippet">
+
+        {% if person == request.user %}
+            <div class="row">
+                <div class="col-12">
+                    <a href="{% url 'accounts:edit_profile' %}" class=" btn btn-primary pull-right">Edit Profile</a>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-sm-3"><!--left col-->
+
+
+                <div class="text-center">
+                    {% if person.photo %}
+                        <img src="{{ person.photo.url }}"
+                             class="avatar rounded-circle img-thumbnail"
+                             alt="avatar">
+                    {% else %}
+                        <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                             class="avatar rounded-circle img-thumbnail"
+                             alt="avatar">
+                    {% endif %}
+
+
+                    <h2>{{ person }}</h2>
+                    {% if user.is_authenticated %}
+                        {% if user.user_type == 'team_leader' %}
+                            <p class="badge-dark">Team Leader</p>
+                        {% else %}
+                            <p class="badge-dark">{{ user.user_type|upper }}</p>
+                        {% endif %}
+                    {% endif %}
+
+
+                </div>
+                </hr><br>
+
+                {% if person.user_type == 'team_leader' or person.user_type == 'player' %}
+
+
+                    <div class="panel panel-default text-center mb-5">
+                        <div class="panel-heading badge-info"> Position <i class="fa fa-link fa-1x"></i></div>
+                        <div class="panel-body">{{ person.player.position }}</div>
+                    </div>
+
+
+                    <ul class="list-group mb-5">
+                        <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+                        <li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span>
+                            125
+                        </li>
+                        <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 13
+                        </li>
+                        <li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37
+                        </li>
+                        <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span>
+                            78
+                        </li>
+                    </ul>
+                {% elif person.user_type == 'sponsor' %}
+                    <div class="panel panel-default text-center mb-5">
+                        <div class="panel-heading badge-info"> Business Name <i class="fa fa-link fa-1x"></i></div>
+                        <div class="panel-body">{{ person.sponsor.business }}</div>
+                    </div>
+                    <div class="panel panel-default text-center mb-5">
+                        <div class="panel-heading badge-info"> # Commercial Register <i class="fa fa-link fa-1x"></i>
+                        </div>
+                        <div class="panel-body">{{ person.sponsor.commercial_register_number }}</div>
+                    </div>
+
+                    <div class="panel panel-default text-center mb-5">
+                        <div class="panel-heading badge-info"> Business Logo <i class="fa fa-link fa-1x"></i></div>
+                        {% if person.sponsor.logo %}
+                            <img class="rounded-circle" width="150" height="auto" src="{{ person.sponsor.logo.url }}"
+                                 alt="Sponsor logo">
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+            </div><!--/col-3-->
+            <div class="ml-5 col-6">
+                <div class="card-header">
+                    <h2>Profile Details</h2>
+                </div>
+                <div class="card-body">
+
+                    <div class="content mt-5 card-box">
+                        <div class="row">
+                            <div class="col-4">
+                                <p class="text-muted">First Name </p>
+                            </div>
+                            <div class="col-8">
+                                <p>{{ person.first_name }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p class="text-muted">Last Name </p>
+                            </div>
+                            <div class="col-8">
+                                <p>{{ person.last_name }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p class="text-muted">Email </p>
+                            </div>
+                            <div class="col-8">
+                                <p>{{ person.email }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p class="text-muted">Phone </p>
+                            </div>
+                            <div class="col-8">
+                                <p>{{ person.phone|default_if_none:"Not set" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-4">
+                                <p class="text-muted">Date of birth </p>
+                            </div>
+                            <div class="col-8">
+                                <p>{{ person.date_of_birth|default_if_none:'Not set' }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <p class="text-muted">Address </p>
+                            </div>
+                            <div class="col-8">
+                                <p>{{ person.city|default_if_none:'City not set' }}
+                                    - {{ person.dist|default_if_none:'Dist not set' }}
+                                    - {{ person.user.street|default_if_none:'Street not set' }} </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <hr>
+                <div class="card-box">
+                    <div class="card-header">
+                        <h3>Payment Details</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <p class="text-muted">Bank Account </p>
+                            </div>
+                            <div class="col-8">
+                                <p>{{ person.bank_account|default_if_none:'Not set' }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <p class="text-muted">Paypal Account </p>
+                            </div>
+                            <div class="col-8">
+                                <p>{{ person.paypal_account|default_if_none:'City not set' }} </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div><!--/col-9-->
+    </div><!--/row-->
+
+
+
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        $(document).ready(function () {
+
+
+            var readURL = function (input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('.avatar').attr('src', e.target.result);
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+
+            $(".file-upload").on('change', function () {
+                readURL(this);
+            });
+        });
+    </script>
+{% endblock %}

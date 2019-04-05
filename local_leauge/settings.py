@@ -25,12 +25,25 @@ SECRET_KEY = '4x&uh1!dsw@2!y)+jz8rs%gi*im$fw&ruyuv7r(7l+g=u-#e7u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'core',
+    'accounts',
+    'teams',
+    'players',
+    'leagues',
+    'fields',
+    'sponsorships',
+
+    'crispy_forms',
+
+    'django_select2',
+
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,11 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 
-    'core',
-    'accounts',
-    'teams',
-    'leagues',
-    'fields',
+
 ]
 
 MIDDLEWARE = [
@@ -83,7 +92,7 @@ WSGI_APPLICATION = 'local_leauge.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'league.db'),
     }
 }
 
@@ -161,3 +170,4 @@ EMAIL_USE_TLS = True
 
 
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

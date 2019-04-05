@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+     <div class="container">
+        <div class="jumbotron">
+            <h2> {% if team %}
+                    Edit Team
+            {% else %}  Create new team {% endif %} </h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto cum debitis doloremque
+                illum modi, porro rem soluta tempore velit. A, architecto assumenda culpa dolorem ea laboriosam magni
+                quaerat sapiente!</p>
+        </div>
+
+    <form action="  {% if team %} {% url 'teams:update' team.id %} {% else %} {% url 'teams:create' %} {% endif %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+        {{ form|crispy }}
+
+        <input type="submit" value="{% if team %}Update Team{% else %} Create Team {% endif %}">
+    </form>
+
+     </div>
+
+
+{% endblock %}

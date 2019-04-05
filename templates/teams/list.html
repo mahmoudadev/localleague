@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+
+
+
+{% block content %}
+
+
+
+    <div class="container">
+        <div class="mt-5">
+            <h2 class="text-center">LIST OF TEAMS</h2>
+
+        </div>
+        <div class="teams mt-5">
+            <div class="row">
+                {% for team in teams %}
+                    <div class="col-3">
+                        <div class="card">
+                            <img src="{{ team.logo.url }}" class="card-img-top" alt="">
+                            <div class="card-body">
+                                <h2>{{ team.name }}</h2>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="{% url 'teams:show' team.id %}" class="card-link">View Details</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                {% empty %}
+                    <p class="ml-5 alert alert-info"> You haven't created Teams yet, click create a new team below</p>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div class="row mt-2 mb-4">
+            <div class="col-12">
+                <div class="text-center">
+                    <a href="{% url 'teams:create' %}" class="btn btn-primary">Create a new Team</a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+{% endblock %}

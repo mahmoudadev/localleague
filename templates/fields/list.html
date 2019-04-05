@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+
+
+
+
+{% block content %}
+
+
+
+    <div class="container">
+        <div class="mt-5">
+            <h2 class="text-center">LIST OF Fields</h2>
+
+        </div>
+        <div class="teams mt-5">
+            <div class="row">
+                {% for field in fields %}
+                    <div class="col-4">
+                        <div class="card mt-5">
+                            <img src="{{ field.image_set.first.image.url }}" class="card-img-top" alt="">
+                            <div class="card-body">
+                                <h2>{{ field.name }}</h2>
+                                <p class="card-text">{{ field.description }}</p>
+                                <a href="{% url 'fields:show' field.id %}" class="card-link">View Details</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                {% empty %}
+                    <p class="ml-5 alert alert-info"> You haven't created Fields yet, click create a new Field below</p>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div class="row mt-2 mb-4">
+            <div class="col-12">
+                <div class="text-center">
+                    <a href="{% url 'fields:create' %}" class="btn btn-primary">Create a new field</a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+{% endblock %}

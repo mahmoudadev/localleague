@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 jumbotron">
+                <div class="mt-5 ">
+                    <h2 class="header-title text-center">Edit Profile </h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        <div class="offset-2 col-8">
+            <div class="form mt-5">
+                <form action="{% url 'accounts:edit_profile' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {{ user_form|crispy }}
+                    {% if additional_form %}
+                        {{ additional_form|crispy}}
+                    {% endif %}
+
+                    <input type="submit" value="Save changes">
+                    <a href="{% url 'accounts:profile' %} " class="btn btn-dark"> Cancel</a>
+
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

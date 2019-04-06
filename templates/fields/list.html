@@ -29,7 +29,13 @@
 
 
                 {% empty %}
-                    <p class="ml-5 alert alert-info"> You haven't created Fields yet, click create a new Field below</p>
+                    <div class="col-12 text-center">
+
+                        <p class="mx-auto alert alert-info"> You haven't created Fields yet, click create a new Field
+                            below</p>
+
+                    </div>
+
                 {% endfor %}
             </div>
         </div>
@@ -39,6 +45,7 @@
             <div class="col-12">
                 <div class="text-center">
                     <a href="{% url 'fields:create' %}" class="btn btn-primary">Create a new field</a>
+
                 </div>
             </div>
 

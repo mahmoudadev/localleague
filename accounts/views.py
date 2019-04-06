@@ -25,7 +25,7 @@ def signup(request):
 @login_required
 def profile(request):
     person = request.user
-    return render(request, 'players/show.html', {'person': person})
+    return render(request, 'accounts/show.html', {'person': person})
 
 @login_required
 def edit(request):

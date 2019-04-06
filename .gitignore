@@ -5,3 +5,5 @@
 .DS_Store
 *.cnf
 *.sqlite3
+*.db
+

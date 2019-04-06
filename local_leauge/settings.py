@@ -43,6 +43,8 @@ INSTALLED_APPS = [
 
     'django_select2',
 
+    'widget_tweaks',
+
 
     'django.contrib.admin',
     'django.contrib.auth',

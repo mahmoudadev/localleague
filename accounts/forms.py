@@ -32,6 +32,9 @@ class UserProfileForm(forms.ModelForm):
             'bank_account',
             'paypal_account'
         ]
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'class': 'datepicker'}),
+        }
 
 
 class PlayerForm(forms.ModelForm):

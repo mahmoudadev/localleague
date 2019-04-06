@@ -20,6 +20,8 @@
             {{ formset|crispy }}
 
             <input type="submit" value='Save'>
+                                <a href="{% url 'fields:list' %}" class="btn btn-dark">Cancel</a>
+
         </form>
     </div>
 

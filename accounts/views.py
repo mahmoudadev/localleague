@@ -15,7 +15,7 @@ def signup(request):
 
         if user:
             login(request, user)
-            return redirect('core:home')
+            return redirect('accounts:edit_profile')
         else:
             return render(request, 'registration/signup.html',{'form': form })
 

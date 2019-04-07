@@ -6,4 +6,5 @@
 *.cnf
 *.sqlite3
 *.db
+league.db
 

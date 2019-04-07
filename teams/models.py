@@ -10,3 +10,17 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class PlayerInvite(models.Model):
+    expire_date = models.DateField()
+
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+
+
+class TeamRequest(models.Model):
+    expire_date = models.DateField()
+
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)

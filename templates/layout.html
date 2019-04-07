@@ -35,12 +35,29 @@
                     <a class="nav-link" href="{% url 'teams:list' %}">Teams</a>
                 </li>
             {% endif %}
+
+             {% if user.is_superuser or user.user_type == 'sponsor' %}
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sponsorships:list' %}">Packages</a>
+                </li>
+            {% endif %}
+
             {% if user.is_superuser or   user.user_type == 'landlord'%}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'fields:list' %}">Fields</a>
                 </li>
             {% endif %}
+
+
+
+
             {% if user.is_authenticated %}
+
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'league:requests' %}">Requests</a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'accounts:profile' %}">Profile</a>
                 </li>

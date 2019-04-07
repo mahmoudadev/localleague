@@ -20,14 +20,18 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('paypal/', include('paypal.standard.ipn.urls')),
+    path('payment/', include('payment.urls')),
     path('', include('core.urls')),
 
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 
     path('teams/', include('teams.urls')),
+    path('leagues/', include('leagues.urls')),
     path('players/', include('players.urls')),
     path('fields/', include('fields.urls')),
+    path('packages/', include('sponsorships.urls')),
 
 ]
 

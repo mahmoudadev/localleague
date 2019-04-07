@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.db import models
+from sponsorships.models import SponsorshipPackge
+
 
 class User(AbstractUser):
     photo = models.ImageField(null=True, blank=True, upload_to='uploads/')
@@ -46,9 +48,14 @@ class Sponsor(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
 
     # related to sponsor attributes
+    packge = models.ForeignKey(SponsorshipPackge, null=True, blank=True, on_delete=models.CASCADE)
     business = models.CharField(max_length=1024, null=True, blank=True)
     commercial_register_number = models.CharField(max_length=2048, null=True, blank=True)
     logo = models.ImageField(blank=True, null=True, upload_to='uploads/')
+
+
+    def has_package(self):
+        return self.packge
 
 
     def __str__(self):

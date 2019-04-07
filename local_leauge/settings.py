@@ -38,12 +38,16 @@ INSTALLED_APPS = [
     'leagues',
     'fields',
     'sponsorships',
+    'payment',
 
     'crispy_forms',
 
     'django_select2',
 
     'widget_tweaks',
+
+    'paypal.standard.ipn',
+
 
 
     'django.contrib.admin',
@@ -173,3 +177,8 @@ EMAIL_USE_TLS = True
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+#PAYPAL Settings
+PAYPAL_RECEIVER_EMAIL = 'localfootballleage@gmail.com'
+PAYPAL_TEST = True

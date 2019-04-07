@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+
+    {% for request in requests  %}
+
+
+        <div class="row">
+        <div class="col-6">
+            <p>You have been invited to  participate on {{ request.league.name }} </p>
+        </div>
+        <div class="col-4">
+            <a href="{% url 'league:team_accept' request.id %}" class="btn btn-success">Accept</a>
+            <a href="{% url 'league:team_reject' request.id %}" class="btn btn-danger">Reject</a>
+        </div>
+        </div>
+
+       {% empty %}
+
+        <p class="alert alert-danger">You don't have any join requests yet.</p>
+    {% endfor %}
+
+
+
+{% endblock %}

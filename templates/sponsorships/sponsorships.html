@@ -1,0 +1,166 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block css %}
+
+    <style>
+        body {
+            font-family: Sans-serif;
+        }
+
+        .head {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            z-index: -1;
+            min-height: 600px;
+            background: linear-gradient(0deg, rgba(6, 13, 1, 0.6), rgba(6, 13, 1, 0.6)), url({% static 'website/images/HedS.jpg' %}) no-repeat scroll;
+            display: flex;
+            background-size: cover;
+            margin-left: -1%;
+            margin-right: -1%;
+            margin-top: -1%;
+        }
+
+        .setting {
+            margin: 20px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 16px;
+            margin-right: 20px;
+            padding-top: 50px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .setting:hover {
+            color: #FFC300;
+        }
+
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            color: #fff;
+            font-size: 80px;
+            transform: translate(-50%, -100%);
+        }
+
+        .packages {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 20px;
+            padding: 10px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        .packageHead {
+            text-align: center;
+        }
+
+        .PackageSection {
+            justify-content: center;
+            text-align: center;
+            align-item: center;
+            display: flex;
+        }
+
+        .PackageCard {
+            width: 300px;
+            margin: 40px;
+            background-color: #333;
+            float: left;
+        }
+
+        .Subscribe {
+            padding: 5px 30px;
+            color: #fff;
+            font-size: 20px;
+            border-radius: 5px;
+            border: transparent;
+            background-color: #496F38;
+        }
+
+        .league {
+            background-color: #333;
+            background-size: 100% auto;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            margin-left: -1%;
+            margin-right: -1%;
+        }
+
+        .accept {
+            background: #437946;
+            border: transparent;
+            text-align: center;
+            font-size: 18px;
+            padding: 5px 45px;
+            border-radius: 5px;
+            color: #fff;
+            margin: 30px;
+        }
+
+        .reject {
+            background: #DE8A00;
+            border: transparent;
+            text-align: center;
+            font-size: 18px;
+            padding: 5px 45px;
+            border-radius: 5px;
+            color: #fff;
+            margin: 30px;
+        }
+
+        .bottomLeague {
+            justify-content: center;
+            text-align: center;
+            align-item: center;
+            display: flex;
+        }
+    </style>
+
+{% endblock %}
+{% block content %}
+
+
+    <div class="head">
+        <div class="center">{{ user }}<br>
+        {% if not user.sponor.has_package %}
+             <small class="text-light   " style="font-size: 25px">You have not subscribed to any packages yet</small>
+        {% endif %}
+        </div>
+
+
+    </div>
+
+    <div class="packageHead">
+        <h1 style="padding-top: 80px;font-size:40px;">SPONSORSHIP PACKAGE</h1>
+        <hr style="width:60%;">
+    </div>
+    <div class="PackageSection">
+        <div class="PackageCard">
+            <img src="{% static 'website/images/cup.jpg' %}" alt="Avatar" style="width:300px;height:300px;">
+            <div class="container">
+                <h1 style="background-color: #DDAD10;width: 300px;height: 100px;padding-top: 27px;margin-left: -16px;"><b>Gold</b></h1>
+                <p style="color:#fff;font-size:25px;">League Sponsorship</p>
+                <h1 style="color:#fff;font-size:45px;">1000 SR</h1>
+                <button class="Subscribe" id="Subscribe2" style="margin-bottom:10px;">Subscribe</button>
+            </div>
+        </div>
+        <div class="PackageCard">
+            <img src="{% static 'website/images/cup.jpg' %}" alt="Avatar" style="width:300px;height:300px;">
+            <div class="container">
+                <h1 style="background-color: silver;width: 300px;height: 100px;padding-top: 27px;margin-left: -16px;"><b>Silver</b></h1>
+                <p style="color:#fff;font-size:25px;">One Match Sponsorship</p>
+                <h1 style="color:#fff;font-size:45px;">500 SR</h1>
+                <button class="Subscribe" id="Subscribe" style="margin-bottom:10px;">Subscribe</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

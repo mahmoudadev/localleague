@@ -1,5 +1,4 @@
 from django.db import models
-from core.models import User
 
 
 class SponsorshipPackge(models.Model):
@@ -14,7 +13,3 @@ class SponsorshipPackge(models.Model):
 
     description = models.TextField(null=True, blank=True)
     price = models.FloatField(null=True, blank=True)
-
-
-
-

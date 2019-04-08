@@ -9,6 +9,9 @@ class InlineImage(admin.TabularInline):
 
 class FieldAdmin(admin.ModelAdmin):
     inlines = [InlineImage]
+    list_display = ['name', 'area', 'location', 'is_available']
+    list_filter = ['location', 'area', 'is_available']
+    list_search = ['location', 'area', 'is_available']
 
 admin.site.register(Field, FieldAdmin)
 admin.site.register(Image)

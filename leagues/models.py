@@ -72,6 +72,7 @@ class Standings(models.Model):
 class ParticipateInvite(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, blank=True)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, null=True, blank=True)
     participant = models.ForeignKey(User, on_delete=models.CASCADE)
     checked = models.BooleanField(default=False)
 
@@ -79,7 +80,7 @@ class ParticipateInvite(models.Model):
         return f"{self.league.name} Invitation"
 
 
-def send_league_invitation(sender, instance, created, **kwargs):
+def notify_sponsor(sender, instance, created, **kwargs):
     print(kwargs)
     print(instance.teams.all())
     print(created)
@@ -89,7 +90,7 @@ def send_league_invitation(sender, instance, created, **kwargs):
         ParticipateInvite.objects.create(league=instance, participant=sponsor.user)
 
 
-def send_to_team_leader(sender, instance, **kwargs):
+def notify_team_leader(sender, instance, **kwargs):
     teams = instance.teams.all()
     for team in teams:
       if not team.leader.user.participateinvite_set.filter(league=instance, team=team, checked=False):
@@ -97,5 +98,15 @@ def send_to_team_leader(sender, instance, **kwargs):
             ParticipateInvite.objects.create(league=instance, team=team, participant=team.leader.user)
 
 
-post_save.connect(send_league_invitation, sender=League)
-m2m_changed.connect(send_to_team_leader, sender=League.teams.through)
+
+def notify_landlord(sender, instance, created, **kwargs):
+    if instance.location:
+        landlord = instance.location.owner
+        if not  landlord.user.participateinvite_set.filter(league=instance.round.league, match=instance, checked=False):
+            print('landlord invite sent')
+            ParticipateInvite.objects.create(league=instance.round.league, match=instance, participant=landlord.user)
+
+
+post_save.connect(notify_landlord, sender=Match)
+post_save.connect(notify_sponsor, sender=League)
+m2m_changed.connect(notify_team_leader, sender=League.teams.through)

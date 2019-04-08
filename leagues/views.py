@@ -39,8 +39,26 @@ def reject_invite_as_sponsor(request, id):
     invite_request = ParticipateInvite.objects.get(id=id)
     invite_request.checked = True
     league = invite_request.league
-    league.teams.remove(invite_request.team)
+    league.sponsor = None
     league.save()
     invite_request.delete()
+    return redirect('league:requests')
 
+
+
+def accept_invite_as_landlord(request, id):
+    invite_request = ParticipateInvite.objects.get(id=id)
+    invite_request.checked = True
+
+    return redirect('league:requests')
+
+
+
+def reject_invite_as_landlord(request, id):
+    invite_request = ParticipateInvite.objects.get(id=id)
+    invite_request.checked = True
+    match = invite_request.match
+    match.location = None
+    match.save()
+    invite_request.delete()
     return redirect('league:requests')

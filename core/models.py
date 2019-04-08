@@ -48,14 +48,14 @@ class Sponsor(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
 
     # related to sponsor attributes
-    packge = models.ForeignKey(SponsorshipPackge, null=True, blank=True, on_delete=models.CASCADE)
+    package = models.ForeignKey(SponsorshipPackge, null=True, blank=True, on_delete=models.CASCADE)
     business = models.CharField(max_length=1024, null=True, blank=True)
     commercial_register_number = models.CharField(max_length=2048, null=True, blank=True)
     logo = models.ImageField(blank=True, null=True, upload_to='uploads/')
 
 
     def has_package(self):
-        return self.packge
+        return self.package
 
 
     def __str__(self):

@@ -3,7 +3,7 @@ from django.db import models
 
 class SponsorshipPackge(models.Model):
     name = models.CharField(max_length=1024, null=True, blank=True)
-    Type = models.CharField(blank=True, null=True, max_length=30,
+    type = models.CharField(blank=True, null=True, max_length=30,
                             choices=(
                                 ('golden', 'GOLDEN'),
                                 ('silver', 'SILVER'),
@@ -13,3 +13,6 @@ class SponsorshipPackge(models.Model):
 
     description = models.TextField(null=True, blank=True)
     price = models.FloatField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name

@@ -130,9 +130,13 @@
 
     <div class="head">
         <div class="center">{{ user }}<br>
-        {% if not user.sponor.has_package %}
-             <small class="text-light   " style="font-size: 25px">You have not subscribed to any packages yet</small>
-        {% endif %}
+            {% if not user.sponsor.has_package %}
+                <small class="text-light   " style="font-size: 25px">You have not subscribed to any packages yet</small>
+            {% else %}
+                <small class="text-light   " style="font-size: 25px">Your sponsorship is
+                    <b>{{ user.sponsor.package }}</b></small>
+            {% endif %}
+
         </div>
 
 
@@ -143,24 +147,24 @@
         <hr style="width:60%;">
     </div>
     <div class="PackageSection">
-        <div class="PackageCard">
-            <img src="{% static 'website/images/cup.jpg' %}" alt="Avatar" style="width:300px;height:300px;">
-            <div class="container">
-                <h1 style="background-color: #DDAD10;width: 300px;height: 100px;padding-top: 27px;margin-left: -16px;"><b>Gold</b></h1>
-                <p style="color:#fff;font-size:25px;">League Sponsorship</p>
-                <h1 style="color:#fff;font-size:45px;">1000 SR</h1>
-                <button class="Subscribe" id="Subscribe2" style="margin-bottom:10px;">Subscribe</button>
+        {% for package in packages %}
+
+            <div class="PackageCard">
+                <img src="{% static 'website/images/cup.jpg' %}" alt="Avatar" style="width:300px;height:300px;">
+                <div class="container">
+                    <h1 style="background-color: {% if package.type == 'golden' %}  #DDAD10 {% else %} silver {% endif %};width: 300px;height: 100px;padding-top: 27px;margin-left: -16px;">
+                        <b>{{ package.name }}</b></h1>
+                    <p style="color:#fff;font-size:25px;">{{ package.description }}</p>
+                    <h1 style="color:#fff;font-size:45px;">{{ package.price }} SR</h1>
+                    {% if not user.sponsor.package.type == package.type %}
+                        <a href="{% url 'sponsorships:subscribe' package.id %}" class="btn btn-light btn-lg mb-5 mt-2"
+                           id="Subscribe2">Subscribe</a>
+                    {% else %}
+                        <p class="text-light">You are subscribed</p>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-        <div class="PackageCard">
-            <img src="{% static 'website/images/cup.jpg' %}" alt="Avatar" style="width:300px;height:300px;">
-            <div class="container">
-                <h1 style="background-color: silver;width: 300px;height: 100px;padding-top: 27px;margin-left: -16px;"><b>Silver</b></h1>
-                <p style="color:#fff;font-size:25px;">One Match Sponsorship</p>
-                <h1 style="color:#fff;font-size:45px;">500 SR</h1>
-                <button class="Subscribe" id="Subscribe" style="margin-bottom:10px;">Subscribe</button>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 
 {% endblock %}

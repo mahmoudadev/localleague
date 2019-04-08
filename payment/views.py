@@ -23,11 +23,15 @@ def payment_process(request, id, flag=None):
 
     league = League.objects.get(id=id)
     if flag == 'sponsor':
-        amount = league.sponsor
+        amount = league.sponsor.package.price
+    else:
+        amount = league.fees_per_team
+
+
     # What you want the button to do.
     paypal_dict = {
         "business": settings.PAYPAL_RECEIVER_EMAIL,
-        "amount": league.fees_per_team,
+        "amount": amount,
         "item_name": "League Subscription",
         "invoice": league.id ,
         "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),

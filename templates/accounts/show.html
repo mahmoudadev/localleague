@@ -59,12 +59,25 @@
                         <li class="list-group-item text-right"><span class="pull-left"><strong>Matches</strong></span>
                             125
                         </li>
-                        <li class="list-group-item text-right"><span class="pull-left"><strong>leagues</strong></span> 13
+                        <li class="list-group-item text-right"><span class="pull-left"><strong>leagues</strong></span>
+                            13
                         </li>
-                        <li class="list-group-item text-right"><span class="pull-left"><strong>Team wins</strong></span> 37
+                        <li class="list-group-item text-right"><span class="pull-left"><strong>Team wins</strong></span>
+                            37
                         </li>
                     </ul>
                 {% elif person.user_type == 'sponsor' %}
+                    <div class="panel panel-default text-center mb-5">
+                        <div class="panel-heading badge-info"> Sponsorship Package <i class="fa fa-link fa-1x"></i>
+                        </div>
+                        {% if person.sponsor.package %}
+                            <div class="panel-body">{{ person.sponsor.package }}</div>
+                            <a href="{% url 'sponsorships:list' %}" class="panel-body">Change your package</a>
+                        {% else %}
+                            <a href="{% url 'sponsorships:list' %}" class="panel-body">Select your package</a>
+                        {% endif %}
+                    </div>
+
                     <div class="panel panel-default text-center mb-5">
                         <div class="panel-heading badge-info"> Business Name <i class="fa fa-link fa-1x"></i></div>
                         <div class="panel-body">{{ person.sponsor.business }}</div>
@@ -82,6 +95,9 @@
                                  alt="Sponsor logo">
                         {% endif %}
                     </div>
+
+
+
                 {% endif %}
 
             </div><!--/col-3-->

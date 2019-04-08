@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'layout.html' %}
 
-</body>
-</html>
+{% block css %}
+    <style>
+        .vh-100 {
+            height: 100vh;
+            min-height: 100vh;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+
+
+    <div class="container">
+        <div class="row vh-100 align-items-center">
+            <div class="col text-center">
+                <div class="content">
+                    <h1>Something went wrong while you are trying to pay.</h1>
+                    <p>If this is not because you stopped the paying proccess, please try again later, or contact the
+                        admin directly.</p>
+                    <a class="btn btn-outline-primary mt-4" href="/">Back To Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

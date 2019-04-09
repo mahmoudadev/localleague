@@ -36,6 +36,12 @@
                 </li>
             {% endif %}
 
+        {% if user.is_superuser or user.user_type == 'team_leader' %}
+              <li class="nav-item">
+                    <a class="nav-link" href="{% url 'players:list' %}">Players</a>
+                </li>
+        {% endif %}
+
              {% if user.is_superuser or user.user_type == 'sponsor' %}
 
                 <li class="nav-item">
@@ -51,11 +57,17 @@
 
 
 
+            {% if user.user_type == 'team_leader' %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'teams:team_requests_list' %}">Players Requests</a>
+                </li>
+            {% endif %}
+
 
             {% if user.is_authenticated %}
 
                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'league:requests' %}">Requests</a>
+                    <a class="nav-link" href="{% url 'league:requests' %}">League Requests</a>
                 </li>
 
                 <li class="nav-item">

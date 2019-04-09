@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+    <div class="container ">
+        <div class="jumbotron">
+            <h2>Players join requests</h2>
+        </div>
+        {% for request in requests %}
+
+            <div class="row align-items-center mb-5 mt-5">
+                <div class="col text-center">
+                    <div class="content alert alert-info">
+                        <div class="col-6">
+                            <p>{{ request.player.user }} request to join {{ request.team }} team as a player</p>
+                        </div>
+                        <div class="col-4">
+                            <a href="{% url 'teams:accept_player' request.id %}"
+                               class="btn btn-success">Accept</a>
+                            <a href="{% url 'teams:reject_player' request.id %}" class="btn btn-danger">Reject</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        {% empty %}
+
+            <p class="alert alert-danger">You don't have any players requests yet.</p>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

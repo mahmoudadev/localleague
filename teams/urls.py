@@ -5,7 +5,17 @@ teams_urlpatterns = ([
 
                          path('', views.list, name='list'),
 
+                         path('team_requests/', views.show_team_requests, name='team_requests_list'),
+
                          path('create/', views.create, name='create'),
+
+                         path('invite_player/<int:p_id>/', views.invite_player, name='invite_player'),
+
+                         path('player_request/<int:id>/accept', views.accept_player, name='accept_player'),
+
+                         path('player/<int:id>/reject', views.reject_player, name='reject_player'),
+
+
 
                          path('<int:id>/', include([
 

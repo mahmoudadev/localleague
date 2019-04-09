@@ -33,13 +33,13 @@
 
 
                     <h2>{{ person }}</h2>
-                    {% if user.is_authenticated %}
-                        {% if user.user_type == 'team_leader' %}
+
+                        {% if person.user_type == 'team_leader' %}
                             <p class="badge-dark">Team Leader</p>
                         {% else %}
-                            <p class="badge-dark">{{ user.user_type|upper }}</p>
+                            <p class="badge-dark">{{ person.user_type|upper }}</p>
                         {% endif %}
-                    {% endif %}
+
 
 
                 </div>

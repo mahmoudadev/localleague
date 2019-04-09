@@ -17,6 +17,9 @@
                 {% for team in teams %}
                     <div class="col-3">
                         <div class="card">
+                            {% if team == request.user.player.team %}
+                                <div class="badge badge-danger">You own this team</div>
+                            {% endif %}
                             <img src="{{ team.logo.url }}" class="card-img-top" alt="">
                             <div class="card-body">
                                 <h2>{{ team.name }}</h2>
@@ -32,23 +35,24 @@
 
                 {% empty %}
                     <div class="col-12 text-center">
-
-                        <p class="mx-auto alert alert-info"> You haven't created <b>teams</b> yet, click create a new <b>team</b>
+                        <p class="mx-auto alert alert-info"> You haven't created <b>team</b> yet, click create a new <b>team</b>
                             below</p>
-
                     </div>
                 {% endfor %}
             </div>
         </div>
 
+        {% if user.user_type == 'team_leader' and not user.player.has_team %}
 
-        <div class="row mt-2 mb-4">
+
+            <div class="row mt-2 mb-4">
             <div class="col-12">
+            <p class="alert alert-danger">You didn't create your own team!, please create a team to enjoy website services</p>
                 <div class="text-center">
-                    <a href="{% url 'teams:create' %}" class="btn btn-primary">Create a new Team</a>
+                    <a href="{% url 'teams:create' %}" class="btn btn-primary">Create your team</a>
                 </div>
             </div>
-
+        {% endif %}
 
         </div>
     </div>

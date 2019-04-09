@@ -1,10 +1,20 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from core.models import User
 from .models import ParticipateInvite
+from teams.models import PlayerInvite
 
+
+@login_required
 def invite_requests(request):
-    requests = request.user.participateinvite_set.filter(checked=False)
-    return render(request, 'requests/list.html', {'requests': requests})
+    if request.user.user_type == 'player':
+        print('player')
+        requests = request.user.player.playerinvite_set.filter(checked=False)
+        print(requests)
+        return render(request, 'requests/team_join_requests.html', {'requests': requests})
+    else:
+        requests = request.user.participateinvite_set.filter(checked=False)
+        return render(request, 'requests/list.html', {'requests': requests})
 
 
 

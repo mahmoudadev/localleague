@@ -6,16 +6,14 @@ from core.models import Player
 
 
 class TeamForm(forms.ModelForm):
-    players = forms.ModelMultipleChoiceField(queryset=Player.objects.all())
-
     class Meta:
         model = Team
         fields = [
             'name',
             'logo',
-            'players'
-        ]
 
+        ]
+    #
     # def clean(self, *args, **kwargs):
     #     super().clean()
     #     """

@@ -33,6 +33,14 @@ class Player(models.Model):
     position = models.CharField(max_length=255, null=True, blank=True)
     is_teamleader = models.BooleanField(default=False)
 
+
+    def has_team(self):
+        if self.is_teamleader:
+            if self.team:
+                return True
+            else:
+                return False
+
     def __str__(self):
         return self.user.username
 

@@ -377,7 +377,14 @@
 
 
     <div class="head">
-        <a class="setting" href="{% url 'teams:update' team.id %}">Edit</a>
+
+        {% if team.leader.user == request.user %}
+            <a class="setting" href="{% url 'teams:update' team.id %}">Edit</a>
+        {% else %}
+            {% if request.user.player not in team.players.all %}
+                <a class="setting" href="{% url 'players:team_request' team.id %}">Join this team</a>
+            {% endif %}
+        {% endif %}
         <img src="{{ team.logo.url }}" style="width:250px;height:250px;margin:85px;">
         <div class="center">{{ team.name }}</div>
         <table style="color:#fff;text-align:center;font-size:30px;position:absolute;top:40%;left:50%;
@@ -421,23 +428,35 @@
                             </h3>
                             <p>{{ player.position|default_if_none:'Not set' }}</p>
                             <ul class="follow-us clearfix">
-                                <li><a href="" data-toggle="modal" data-target="#exampleModal"
-                                       data-player-id="{{ player.id }}"
-                                       data-player="{{ player.position }}">Set/Change
-                                    Position</a></li>
+                                {% if team  == request.user.player.team %}
+
+
+                                    <li><a href="" data-toggle="modal" data-target="#exampleModal"
+                                           data-player-id="{{ player.id }}"
+                                           data-player="{{ player.position }}">Set/Change
+                                        Position</a></li>
+                                {% endif %}
                             </ul>
                         </div>
                     </li>
+                {% empty %}
+
+                    <div class="col-12 justify-content-center">
+                        <p class="text-light text-center ">You have not invited any players yet. <a
+                                href="{% url 'players:list' %}">invite players</a></p>
+                    </div>
+
                 {% endfor %}
 
             </ul>
         </div>
     </section>
 
-
-    <div class="button">
-        <button id="InviteClick" class="mail">Invite by Mail</button>
-    </div>
+    {% if team.owner.user == request.user %}
+        <div class="button">
+            <button id="InviteClick" class="mail">Invite by Mail</button>
+        </div>
+    {% endif %}
 
 
     <div class="InviteForm">

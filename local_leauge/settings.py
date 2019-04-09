@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'fields',
     'sponsorships',
     'payment',
+    'reports',
 
     'crispy_forms',
 

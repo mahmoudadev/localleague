@@ -32,6 +32,7 @@ urlpatterns = [
     path('players/', include('players.urls')),
     path('fields/', include('fields.urls')),
     path('packages/', include('sponsorships.urls')),
+    path('reports/', include('reports.urls')),
 
 ]
 

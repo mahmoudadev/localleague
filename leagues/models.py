@@ -11,8 +11,13 @@ class League(models.Model):
     teams = models.ManyToManyField(Team)
     fees_per_team = models.FloatField(default=99.0)
     sponsor = models.ForeignKey(Sponsor, null=True, on_delete=models.CASCADE)
+    winner = models.OneToOneField(Team, null=True, blank=True , related_name='league_winner', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+
+
+
+
 
     def __str__(self):
         return self.name
@@ -99,12 +104,15 @@ def notify_team_leader(sender, instance, **kwargs):
 
 
 
-def notify_landlord(sender, instance, created, **kwargs):
+def notify_landlord(sender, instance, created, update_fields, **kwargs):
+    print(update_fields)
     if instance.location:
-        landlord = instance.location.owner
-        if not  landlord.user.participateinvite_set.filter(league=instance.round.league, match=instance, checked=False):
-            print('landlord invite sent')
-            ParticipateInvite.objects.create(league=instance.round.league, match=instance, participant=landlord.user)
+        if created or 'location' in update_fields:
+            print('hit this line')
+            landlord = instance.location.owner
+            if not  landlord.user.participateinvite_set.filter(league=instance.round.league, match=instance, checked=False):
+                print('landlord invite sent')
+                ParticipateInvite.objects.create(league=instance.round.league, match=instance, participant=landlord.user)
 
 
 post_save.connect(notify_landlord, sender=Match)

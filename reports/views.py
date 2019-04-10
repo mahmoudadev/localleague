@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from leagues.models import League
 
-# Create your views here.
+
+
+
+def leagues_summary(request):
+
+    leagues = League.objects.all()
+
+    return render(request, 'reports/summary.html', {'leagues': leagues})

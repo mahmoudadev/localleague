@@ -16,6 +16,11 @@ class League(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
 
 
+    def is_finished(self):
+        if self.winner:
+            return True
+        else:
+            return False
 
 
 
@@ -56,7 +61,6 @@ class Match(models.Model):
 
 class Standings(models.Model):
     league = models.ForeignKey(League, null=True, blank=True, on_delete=models.CASCADE)
-    match = models.ForeignKey(Match, null=True, blank=True, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, null=True, blank=True, on_delete=models.CASCADE)
 
     # standings table info
@@ -71,7 +75,7 @@ class Standings(models.Model):
     losses = models.IntegerField(verbose_name="Losses", default=0)
 
     def __str__(self):
-        return f"{self.league.name} - {self.team.name} - {self.match} Result"
+        return f"{self.league.name} - {self.team.name} Result"
 
 
 class ParticipateInvite(models.Model):
@@ -85,14 +89,21 @@ class ParticipateInvite(models.Model):
         return f"{self.league.name} Invitation"
 
 
-def notify_sponsor(sender, instance, created, **kwargs):
+def notify_sponsor_or_update_league(sender, instance, created, update_fields, **kwargs):
     print(kwargs)
     print(instance.teams.all())
     print(created)
-    sponsor = instance.sponsor
-    if not  sponsor.user.participateinvite_set.filter(league=instance, checked=False):
-        print('sponsor invite sent')
-        ParticipateInvite.objects.create(league=instance, participant=sponsor.user)
+    if created or 'sponsor' in update_fields:
+        sponsor = instance.sponsor
+        if sponsor:
+            if not  sponsor.user.participateinvite_set.filter(league=instance, checked=False):
+                print('sponsor invite sent')
+                ParticipateInvite.objects.create(league=instance, participant=sponsor.user)
+
+
+    if 'winner' in update_fields:
+        pass
+
 
 
 def notify_team_leader(sender, instance, **kwargs):
@@ -104,8 +115,9 @@ def notify_team_leader(sender, instance, **kwargs):
 
 
 
-def notify_landlord(sender, instance, created, update_fields, **kwargs):
+def notify_landlord_or_update_match(sender, instance, created, update_fields, **kwargs):
     print(update_fields)
+    # check to send league invitation to landlord
     if instance.location:
         if created or 'location' in update_fields:
             print('hit this line')
@@ -114,7 +126,45 @@ def notify_landlord(sender, instance, created, update_fields, **kwargs):
                 print('landlord invite sent')
                 ParticipateInvite.objects.create(league=instance.round.league, match=instance, participant=landlord.user)
 
+    if created or 'result' in update_fields:
+        try:
+            home_team = Standings.objects.get(team=instance.home, league=instance.round.league)
+            away_team = Standings.objects.get(team=instance.away, league=instance.round.league)
+        except Exception:
+            home_team = Standings.objects.create(team=instance.home, league=instance.round.league)
+            away_team = Standings.objects.create(team=instance.away, league=instance.round.league)
 
-post_save.connect(notify_landlord, sender=Match)
-post_save.connect(notify_sponsor, sender=League)
+        if instance.result == '1':
+            home_team.games_played += 1
+            away_team.games_played += 1
+            away_team.wins += 1
+            away_team.points += 3
+            home_team.losses += 1
+            away_team.save()
+            home_team.save()
+        elif instance.result == '2':
+            home_team.games_played += 1
+            away_team.games_played += 1
+            home_team.wins += 1
+            home_team.points +=  3
+            away_team.losses += 1
+            away_team.save()
+            home_team.save()
+        elif instance.result == '3':
+            home_team.games_played += 1
+            away_team.games_played += 1
+            home_team.draws += 1
+            away_team.draws += 1
+            home_team.points += 1
+            away_team.points += 1
+            away_team.save()
+            home_team.save()
+        else:
+            pass
+
+
+
+
+post_save.connect(notify_landlord_or_update_match, sender=Match)
+post_save.connect(notify_sponsor_or_update_league, sender=League)
 m2m_changed.connect(notify_team_leader, sender=League.teams.through)

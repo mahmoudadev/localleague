@@ -4,11 +4,14 @@ from paypal.standard.forms import PayPalPaymentsForm
 
 from django.views.decorators.csrf import csrf_exempt
 
-from leagues.models import League
+from leagues.models import League, ParticipateInvite
 
 
 @csrf_exempt
-def payment_done(request):
+def payment_done(request, id):
+    invite_request = ParticipateInvite.objects.get(id=id)
+    invite_request.checked = True
+    invite_request.save()
     return render(request, 'payment/done.html')
 
 
@@ -21,12 +24,15 @@ def payment_canceled(request):
 
 def payment_process(request, id, flag=None):
 
-    league = League.objects.get(id=id)
-    if flag == 'sponsor':
-        amount = league.sponsor.package.price
-    else:
-        amount = league.fees_per_team
-
+    try:
+        invite_request = ParticipateInvite.objects.get(id=id)
+        league = invite_request.league
+        if flag == 'sponsor':
+            amount = league.sponsor.package.price
+        else:
+            amount = league.fees_per_team
+    except Exception as e:
+        return render(request, 'expections/show.html',  {'error': e })
 
     # What you want the button to do.
     paypal_dict = {
@@ -35,7 +41,7 @@ def payment_process(request, id, flag=None):
         "item_name": "League Subscription",
         "invoice": league.id ,
         "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
-        "return": request.build_absolute_uri(reverse('payment:done')),
+        "return": request.build_absolute_uri(reverse('payment:done', kwargs={'id': invite_request.id } )),
         "cancel_return": request.build_absolute_uri(reverse('payment:cancel')),
         "custom": "premium_plan",  # Custom command to correlate to some function later (optional)
     }

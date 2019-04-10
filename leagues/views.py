@@ -21,9 +21,7 @@ def invite_requests(request):
 
 def accept_invite_as_team(request, id):
     invite_request = ParticipateInvite.objects.get(id=id)
-    invite_request.checked = True
-
-    return redirect('payment:process', id=invite_request.league.id)
+    return redirect('payment:process', id=invite_request.id)
 
 
 
@@ -39,9 +37,7 @@ def reject_invite_as_team(request, id):
 
 def accept_invite_as_sponsor(request, id):
     invite_request = ParticipateInvite.objects.get(id=id)
-    invite_request.checked = True
-
-    return redirect('payment:process', id=invite_request.league.id, flag='sponsor')
+    return redirect('payment:process', id=invite_request.id, flag='sponsor')
 
 
 
@@ -59,6 +55,7 @@ def reject_invite_as_sponsor(request, id):
 def accept_invite_as_landlord(request, id):
     invite_request = ParticipateInvite.objects.get(id=id)
     invite_request.checked = True
+    invite_request.save()
 
     return redirect('league:requests')
 

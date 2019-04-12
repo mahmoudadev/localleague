@@ -452,7 +452,7 @@
         </div>
     </section>
 
-    {% if team.owner.user == request.user %}
+    {% if team.leader.user == request.user %}
         <div class="button">
             <button id="InviteClick" class="mail">Invite by Mail</button>
         </div>
@@ -465,9 +465,9 @@
             <img src="{% static 'website/images/email.png' %}" style="margin:20px;">
             <form action="">
                 <label style=" font-size:20px;border-bottom: 1px solid black;padding: 0 40px;">Enter Email</label><br>
-                <input type="email" placeholder="example@example.com">
+                <input type="email" id="player_email" placeholder="example@example.com">
                 <br>
-                <button type="submit" class="submit" style="color: #fff;">Send</button>
+                <button type="submit" id="invite_via_email" class="submit" style="color: #fff;">Send</button>
             </form>
         </div>
     </div>
@@ -574,6 +574,30 @@
 
             })
 
+        });
+
+
+        $('#invite_via_email').on('click', function (e) {
+
+            $.ajax({
+                method: "POST",
+                url: '/teams/invite_player_via_email/' + '{{ team.id }}' + '/',
+                data: {email: $('#player_email').val()},
+
+                beforeSend: function (request, settings) {
+                    request.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    if (data.error) {
+                        console.log(data.error)
+                    } else {
+                        console.log(data.success);
+                        $('.closeInvite').click();
+                    }
+
+
+                }
+            });
         });
 
 

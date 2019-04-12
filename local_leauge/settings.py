@@ -168,8 +168,8 @@ AUTH_USER_MODEL = 'core.User'
 
 # Setup SMTP EMAIL Server
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'localfootballleague@gmail.com'
+EMAIL_HOST_PASSWORD = 'Mm123456_'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

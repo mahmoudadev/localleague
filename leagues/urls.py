@@ -12,6 +12,8 @@ league_urlpatterns = ([
                           path('landlord/<int:id>/accept/', views.accept_invite_as_landlord, name='landlord_accept'),
                           path('landlord/<int:id>/reject/', views.reject_invite_as_landlord, name='landlord_reject'),
 
+                        path('<int:id>/league_landlords/', views.list_landlords , name='list_landlords'),
+
                       ], 'league')
 
 urlpatterns = [

@@ -10,6 +10,7 @@ teams_urlpatterns = ([
                          path('create/', views.create, name='create'),
 
                          path('invite_player/<int:p_id>/', views.invite_player, name='invite_player'),
+                         path('invite_player_via_email/<int:team_id>/', views.invite_player_via_email, name='invite_player_via_email'),
 
                          path('player_request/<int:id>/accept', views.accept_player, name='accept_player'),
 

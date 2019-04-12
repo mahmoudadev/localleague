@@ -10,6 +10,7 @@ class Field(models.Model):
     description = models.TextField(null=True, blank=True)
     owner = models.ForeignKey(LandLord, null=True, blank=True, on_delete=models.CASCADE)
     area = models.CharField(max_length=255, null=True, blank=True)
+    price = models.FloatField()
     location = models.CharField(max_length=255, null=True, blank=True)
     is_available = models.BooleanField(default=True)
 

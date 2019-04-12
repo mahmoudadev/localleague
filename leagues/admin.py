@@ -14,6 +14,8 @@ class LeagueAdmin(admin.ModelAdmin):
         if change:
             if form.initial['name'] != form.cleaned_data['name']:
                 update_fields.append('name')
+            if form.initial['description'] != form.cleaned_data['description']:
+                update_fields.append('description')
             if form.initial['starts_at'] != form.cleaned_data['starts_at']:
                 update_fields.append('starts_at')
             if form.initial['fees_per_team'] != form.cleaned_data['fees_per_team']:

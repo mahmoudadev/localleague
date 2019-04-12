@@ -83,6 +83,10 @@
                                     <th>Team #3</th>
                                     <th>Team #4</th>
                                     <th>Winner</th>
+                                    {% if request.user.is_superuser %}
+
+                                    <th>Actions</th>
+                                    {% endif %}
                                 </tr>
 
                                 </thead>
@@ -95,8 +99,12 @@
                                             <td>{{ team.name }}</td>
                                         {% endfor %}
                                         <td>{{ league.winner|default_if_none:'In progress' }}</td>
-
+                                        {% if request.user.is_superuser %}
+                                            <td><a href="{% url 'league:list_landlords' league.id %}" class=" text-light btn btn-success btn-sm">Pay
+                                                Landlord(s)</a></td>
+                                        {% endif %}
                                     </tr>
+
                                 {% endfor %}
 
 

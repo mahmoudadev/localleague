@@ -1,20 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.conf import settings
 from django.shortcuts import render, redirect
-
+from django.core.mail import send_mail
 from core.models import Player
-from .forms import  TeamForm
+from .forms import TeamForm
 from teams.models import Team, PlayerInvite, TeamRequest
-
-
-
 
 
 def list(request):
     teams = Team.objects.all()
     return render(request, 'teams/list.html', {'teams': teams})
-
-
 
 
 def create(request):
@@ -38,14 +34,12 @@ def create(request):
     return render(request, 'teams/form.html', {'form': form})
 
 
-
 def show(request, id):
     team = Team.objects.get(id=id)
-    return render(request, 'teams/show.html', {'team': team })
+    return render(request, 'teams/show.html', {'team': team})
 
 
 def update(request, id):
-
     team = Team.objects.get(id=id)
 
     form = TeamForm(request.POST or None, request.FILES or None, instance=team)
@@ -60,7 +54,7 @@ def update(request, id):
     return render(request, 'teams/form.html', {'team': team, 'form': form})
 
 
-def set_player_position(request, id ,  player_id):
+def set_player_position(request, id, player_id):
     try:
         team = Team.objects.get(id=id)
         player = Player.objects.get(id=player_id)
@@ -110,5 +104,24 @@ def reject_player(request, id):
     player_request.save()
     team = request.user.player.team
 
-    #we may send an email to notify the player that he's been rejected
+    # we may send an email to notify the player that he's been rejected
     return redirect('teams:team_requests_list')
+
+
+def invite_player_via_email(request, team_id):
+    team = Team.objects.get(id=team_id)
+    print(request.POST)
+    msg = f"You have been Invited to join {team.name}. you can now register here : http://localfootballleague.pythonanywhere.com/ as a player \n Thank your for your time \n best wishes \n Local Football League"
+    try:
+        send_mail(
+            'Team Invitation',
+            msg,
+            settings.EMAIL_HOST_USER,
+            [request.POST.get('email')],
+            fail_silently=False,
+        )
+
+        return JsonResponse({'success': 'Your invitation has been sent successfully'})
+
+    except Exception as e:
+        return render(request, 'expections/show.html', {'error': e})

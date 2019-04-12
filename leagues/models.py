@@ -7,6 +7,7 @@ from django.db.models.signals import post_save, m2m_changed
 
 class League(models.Model):
     name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
     starts_at = models.DateTimeField(null=True, blank=True)
     teams = models.ManyToManyField(Team)
     fees_per_team = models.FloatField(default=99.0)
@@ -21,6 +22,17 @@ class League(models.Model):
             return True
         else:
             return False
+
+    def get_landlords(self):
+        rounds = self.round_set.all()
+        landlords = []
+        for round in rounds:
+            matches = round.matches.all()
+            for match in matches:
+                landlords.append({'landlord':match.location.owner,  'match': match})
+
+        return landlords
+
 
 
 

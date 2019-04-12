@@ -51,58 +51,29 @@
         </div>
         <div class="bg-text">
 
-            <div class="col-md-4">
-                <div class="media">
-                    <div class="media-body">
-                        <a class="pull-left" href="#"><span class="dateEl"><em>18</em>Nov</span></a>
+            {% for event in events %}
 
-                        <h4 class="media-heading">
-                            <a href="league.html">Summer League</a>
-                        </h4>
-                        <div class="meta-data">
-                            <span class="longDate">Nov 18, 2019</span> <span class="timeEl">06:00pm - 08:00pm</span>
+
+
+
+                <div class="col-md-4">
+                    <div class="media">
+                        <div class="media-body">
+                            <a class="" href="#"><span class="dateEl"><em>{{ event.starts_at|date:'d' }}</em>{{ event.starts_at|date:'M' }}</span></a>
+
+                            <h4 class="media-heading">
+                                <a href="{% url 'reports:leagues_summary' %}">{{ event.name }}</a>
+                            </h4>
+                            <div class="meta-data">
+                                <span class="longDate">{{ event.starts_at }}</span>
+                            </div>
+                            <p>
+                                {{ event.description }}
+                            </p>
                         </div>
-                        <p>
-                            summer league for 2019
-                        </p>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="media">
-
-                    <div class="media-body">
-                        <a class="pull-left" href="#"><span class="dateEl"><em>18</em>Dec</span></a>
-                        <h4 class="media-heading">
-                            <a href="#">Fall league</a>
-                        </h4>
-                        <div class="meta-data">
-                            <span class="longDate">Dec 18, 2019</span> <span class="timeEl">06:00pm - 08:00pm</span>
-                        </div>
-                        <p>
-                            fall league for 2019
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="media">
-
-                    <div class="media-body">
-                        <a class="pull-left" href="#"><span class="dateEl"><em>20</em>Jun</span></a>
-                        <h4 class="media-heading">
-                            <a href="#">spring league</a>
-                        </h4>
-                        <div class="meta-data">
-                            <span class="longDate">jun 20, 2019</span> <span class="timeEl">06:00pm - 08:00pm</span>
-                        </div>
-                        <p>
-                            Spring league for 2019
-                        </p>
-                    </div>
-                </div>
-            </div>
-
+            {% endfor %}
         </div>
 
     </div>
@@ -169,7 +140,7 @@
         }
 
         .media .longDate {
-            background: transparent url(../images/ico-calendar.png) no-repeat left top;
+            background: transparent url({% static 'website/images/ico-calendar.png' %}) no-repeat left top;
             padding: 0 10px 0 0px;
             border-right: 1px solid #eb5b4c;
             margin-right: 3px;
@@ -310,7 +281,8 @@
                                     <p class="card-text">{{ item.body|truncatechars:100 }}</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a  href="{% url 'core:post_page' item.id %}" class="btn btn-sm btn-outline-secondary">Read more</a>
+                                            <a href="{% url 'core:post_page' item.id %}"
+                                               class="btn btn-sm btn-outline-secondary">Read more</a>
                                         </div>
                                         <small class="text-muted">{{ item.modified_at|timesince }} ago</small>
                                     </div>

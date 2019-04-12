@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from core.models import User
 from .models import ParticipateInvite
 from teams.models import PlayerInvite
-
+from leagues.models import League
 
 @login_required
 def invite_requests(request):
@@ -16,8 +16,13 @@ def invite_requests(request):
         requests = request.user.participateinvite_set.filter(checked=False)
         return render(request, 'requests/list.html', {'requests': requests})
 
+def list_landlords(request, id):
+    league = League.objects.get(id=id)
+    landlords = league.get_landlords()
 
+    print(landlords)
 
+    return render(request, 'payment/landlords.html',  {'landlords': landlords, 'league': league})
 
 def accept_invite_as_team(request, id):
     invite_request = ParticipateInvite.objects.get(id=id)

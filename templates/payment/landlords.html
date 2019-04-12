@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    League's Landlords
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="container">
+        <div class="jumbotron">
+            <h2>{{ league.name }} Landlords  </h2>
+            <p>Pay all landlords whom participated to {{ league.name }}</p>
+        </div>
+    <div class="row">
+
+
+    {% for item in landlords %}
+        <div class="col-4">
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" src="{{ item.match.location.image_set.first.image.url }}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ item.landlord.user }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ item.match }}</h6>
+                <p class="card-text">{{ item.match.location }}</p>
+                <a href="{% url 'payment:admin_process' id=league.id field_id=item.match.location.id %}" class="card-link">Pay lease fees</a>
+            </div>
+        </div>
+        </div>
+
+    {% endfor %}
+</div>
+</div>
+
+
+{% endblock %}

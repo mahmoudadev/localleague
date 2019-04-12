@@ -72,7 +72,7 @@
                 <div class="media">
 
                     <div class="media-body">
-                         <a class="pull-left" href="#"><span class="dateEl"><em>18</em>Dec</span></a>
+                        <a class="pull-left" href="#"><span class="dateEl"><em>18</em>Dec</span></a>
                         <h4 class="media-heading">
                             <a href="#">Fall league</a>
                         </h4>
@@ -89,7 +89,7 @@
                 <div class="media">
 
                     <div class="media-body">
-                         <a class="pull-left" href="#"><span class="dateEl"><em>20</em>Jun</span></a>
+                        <a class="pull-left" href="#"><span class="dateEl"><em>20</em>Jun</span></a>
                         <h4 class="media-heading">
                             <a href="#">spring league</a>
                         </h4>
@@ -108,18 +108,6 @@
     </div>
     <style>
 
-        .card {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            transition: 0.3s;
-            width: 30%;
-            background: #fff;
-            float: left;
-            margin: 20px;
-        }
-
-        .card:hover {
-            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-        }
 
         .text {
             padding: 2px 16px;
@@ -295,23 +283,47 @@
     </style>
 
 
-    <div class="Title">
-        <h1 style="padding-top: 80px;">NEWS</h1>
-        <hr style="width:60%;">
-    </div>
+    <main role="main">
 
-    <div class="HSection">
-        <div class="HCard">
+        <section class="jumbotron text-center">
             <div class="container">
-                <p style="font-size:20px;">We Will Put News Here</p>
+                <h1 class="jumbotron-heading">Latest News</h1>
+                <p class="lead text-muted">Something short and leading about the collection below—its contents, the
+                    creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it
+                    entirely.</p>
+            </div>
+        </section>
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+
+                <div class="row">
+
+                    {% for item in news %}
+                        <div class="col-6">
+                            <div class="card mb-4 box-shadow">
+                                <img class="card-img-top"
+                                     src="{{ item.image.url }}"
+                                     alt="Card image cap">
+                                <div class="card-body">
+                                    <h4>{{ item.title }}</h4>
+                                    <p class="card-text">{{ item.body|truncatechars:100 }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a  href="{% url 'core:post_page' item.id %}" class="btn btn-sm btn-outline-secondary">Read more</a>
+                                        </div>
+                                        <small class="text-muted">{{ item.modified_at|timesince }} ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+                </div>
             </div>
         </div>
-        <div class="HCard">
-            <div class="container">
-                <p style="font-size:20px;">We Will Put News Here</p>
-            </div>
-        </div>
-    </div>
 
+    </main>
 
 {% endblock %}

@@ -26,7 +26,15 @@ class User(AbstractUser):
 
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        if self.first_name and self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        elif self.is_superuser:
+            if self.first_name and self.last_name:
+                return f"{self.first_name} {self.last_name} - (Admin)"
+            else:
+                return f"{self.username} - (Admin)"
+        else:
+            return self.username
 
 class Player(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)

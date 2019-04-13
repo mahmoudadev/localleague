@@ -48,6 +48,11 @@ class Player(models.Model):
                 return True
             else:
                 return False
+        else:
+            if self.teams_as_player.all():
+                return True
+            else:
+                return False
 
     def __str__(self):
         return self.user.username

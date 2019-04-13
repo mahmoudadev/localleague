@@ -101,6 +101,16 @@ class ParticipateInvite(models.Model):
         return f"{self.league.name} Invitation"
 
 
+class FieldReseravtion(models.Model):
+    league = models.ForeignKey(League, on_delete=models.CASCADE)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, null=True, blank=True)
+    landlord = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_paid = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.league.name} {self.match} Field Reservation"
+
+
 def notify_sponsor_or_update_league(sender, instance, created, update_fields, **kwargs):
     print(kwargs)
     print(instance.teams.all())
@@ -134,7 +144,7 @@ def notify_landlord_or_update_match(sender, instance, created, update_fields, **
         if created or 'location' in update_fields:
             print('hit this line')
             landlord = instance.location.owner
-            if not  landlord.user.participateinvite_set.filter(league=instance.round.league, match=instance, checked=False):
+            if not  landlord.user.participateinvite_set.filter(league=instance.round.league,participant=landlord.user, match=instance, checked=False):
                 print('landlord invite sent')
                 ParticipateInvite.objects.create(league=instance.round.league, match=instance, participant=landlord.user)
 

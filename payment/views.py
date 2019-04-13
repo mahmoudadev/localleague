@@ -4,7 +4,7 @@ from paypal.standard.forms import PayPalPaymentsForm
 
 from django.views.decorators.csrf import csrf_exempt
 
-from leagues.models import League, ParticipateInvite
+from leagues.models import League, ParticipateInvite, FieldReseravtion
 from fields.models import Field
 
 @csrf_exempt
@@ -16,7 +16,10 @@ def payment_done(request, id):
 
 
 @csrf_exempt
-def admin_payment_done(request):
+def admin_payment_done(request, id):
+    field_reservation = FieldReseravtion.objects.get(id=id)
+    field_reservation.is_paid = True
+    field_reservation.save()
     return render(request, 'payment/done.html')
 
 
@@ -56,10 +59,11 @@ def payment_process(request, id, flag=None):
 
 
 
-def admin_payment_process(request, id, field_id):
+def admin_payment_process(request, id):
     try:
-        league = League.objects.get(id=id)
-        field = Field.objects.get(id=id)
+        field_reservation = FieldReseravtion.objects.get(id=id)
+        league = field_reservation.league
+        field = field_reservation.match.location
 
     except Exception as e:
         return render(request, 'expections/show.html',  {'error': e })
@@ -71,7 +75,7 @@ def admin_payment_process(request, id, field_id):
         "item_name": "Field Reservation fees",
         "invoice": league.id ,
         "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
-        "return": request.build_absolute_uri(reverse('payment:admin_done')),
+        "return": request.build_absolute_uri(reverse('payment:admin_done', kwargs={'id': field_reservation.id})),
         "cancel_return": request.build_absolute_uri(reverse('payment:cancel')),
         "custom": "premium_plan",  # Custom command to correlate to some function later (optional)
     }

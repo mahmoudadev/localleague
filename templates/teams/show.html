@@ -455,6 +455,12 @@
     {% if team.leader.user == request.user %}
         <div class="button">
             <button id="InviteClick" class="mail">Invite by Mail</button>
+
+        </div>
+        <div class="row">
+        <div class="col-12 text-center">
+            <p class="alert alert-info d-none" id="mesg"></p>
+        </div>
         </div>
     {% endif %}
 
@@ -467,7 +473,7 @@
                 <label style=" font-size:20px;border-bottom: 1px solid black;padding: 0 40px;">Enter Email</label><br>
                 <input type="email" id="player_email" placeholder="example@example.com">
                 <br>
-                <button type="submit" id="invite_via_email" class="submit" style="color: #fff;">Send</button>
+                <a href="#" id="invite_via_email"  class="submit" style="color: #fff;">Send</a>
             </form>
         </div>
     </div>
@@ -589,9 +595,13 @@
                 },
                 success: function (data) {
                     if (data.error) {
-                        console.log(data.error)
+                        console.log(data.error);
+                        var mesg = $('#mesg').html(data.error);
+                        mesg.removeClass('d-none');
                     } else {
                         console.log(data.success);
+                        var mesg = $('#mesg').html(data.success);
+                        mesg.removeClass('d-none');
                         $('.closeInvite').click();
                     }
 

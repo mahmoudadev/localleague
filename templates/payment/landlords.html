@@ -15,15 +15,15 @@
     <div class="row">
 
 
-    {% for item in landlords %}
+    {% for item in field_reservations %}
         <div class="col-4">
         <div class="card" style="width: 18rem;">
           <img class="card-img-top" src="{{ item.match.location.image_set.first.image.url }}" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">{{ item.landlord.user }}</h5>
+                <h5 class="card-title">{{ item.landlord }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ item.match }}</h6>
                 <p class="card-text">{{ item.match.location }}</p>
-                <a href="{% url 'payment:admin_process' id=league.id field_id=item.match.location.id %}" class="card-link">Pay lease fees</a>
+                <a href="{% url 'payment:admin_process' id=item.id %}" class="card-link">Pay lease fees</a>
             </div>
         </div>
         </div>

@@ -148,6 +148,8 @@
             </div>
             <ul class="row">
                 {% for player in players %}
+
+
                     <li class="col-12 col-md-6 col-lg-3">
                         <div class="cnt-block equal-hight" style="height: 349px;">
 
@@ -165,8 +167,13 @@
                             </h3>
                             <p>{{ player.position|default_if_none:'Not set' }}</p>
                             <ul class="follow-us clearfix">
-                                <li><a href="{% url 'teams:invite_player' player.id %}">Join Request</a></li>
-                                <li><a href="{% url 'players:show_profile'  player.user.id%}">View Profile</a></li>
+                                {% if player.has_team %}
+                                    <li>He's in a team</li>
+                                    {% else %}
+                                    <li><a href="{% url 'teams:invite_player' player.id %}">Join Request</a></li>
+                                {% endif %}
+
+                                <li><a href="{% url 'players:show_profile'  player.user.id %}">View Profile</a></li>
                             </ul>
                         </div>
                     </li>

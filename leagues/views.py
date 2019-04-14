@@ -6,6 +6,9 @@ from django.core.mail import send_mail
 from .models import ParticipateInvite
 from teams.models import PlayerInvite
 from leagues.models import League, FieldReseravtion
+from core.decorators import *
+
+
 
 @login_required
 def invite_requests(request):
@@ -19,18 +22,21 @@ def invite_requests(request):
         return render(request, 'requests/list.html', {'requests': requests})
 
 @login_required
+@check_admin
 def list_landlords(request, id):
     league = League.objects.get(id=id)
     field_reservation = FieldReseravtion.objects.filter(league=league, is_paid=False)
     return render(request, 'payment/landlords.html',  {'field_reservations': field_reservation, 'league': league})
 
 @login_required
+@check_team_leader
 def accept_invite_as_team(request, id):
     invite_request = ParticipateInvite.objects.get(id=id)
     return redirect('payment:process', id=invite_request.id)
 
 
 @login_required
+@check_team_leader
 def reject_invite_as_team(request, id):
     invite_request = ParticipateInvite.objects.get(id=id)
     invite_request.checked = True
@@ -57,12 +63,14 @@ def reject_invite_as_team(request, id):
 
 
 @login_required
+@check_sponsor
 def accept_invite_as_sponsor(request, id):
     invite_request = ParticipateInvite.objects.get(id=id)
     return redirect('payment:process', id=invite_request.id, flag='sponsor')
 
 
 @login_required
+@check_sponsor
 def reject_invite_as_sponsor(request, id):
     invite_request = ParticipateInvite.objects.get(id=id)
     invite_request.checked = True
@@ -91,6 +99,7 @@ def reject_invite_as_sponsor(request, id):
 
 
 @login_required
+@check_landlord
 def accept_invite_as_landlord(request, id):
     invite_request = ParticipateInvite.objects.get(id=id)
     invite_request.checked = True
@@ -107,6 +116,7 @@ def accept_invite_as_landlord(request, id):
 
 
 @login_required
+@check_landlord
 def reject_invite_as_landlord(request, id):
     invite_request = ParticipateInvite.objects.get(id=id)
     invite_request.checked = True

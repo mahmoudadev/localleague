@@ -6,13 +6,17 @@ from django.core.mail import send_mail
 from core.models import Player
 from .forms import TeamForm
 from teams.models import Team, PlayerInvite, TeamRequest
+from core.decorators import *
+
 
 @login_required
+@check_team_leader_or_player
 def list(request):
     teams = Team.objects.all()
     return render(request, 'teams/list.html', {'teams': teams})
 
 @login_required
+@check_team_leader
 def create(request):
     print(request.POST)
     print(request.FILES)
@@ -34,11 +38,13 @@ def create(request):
     return render(request, 'teams/form.html', {'form': form})
 
 @login_required
+@check_team_leader_or_player
 def show(request, id):
     team = Team.objects.get(id=id)
     return render(request, 'teams/show.html', {'team': team})
 
 @login_required
+@check_team_leader
 def update(request, id):
     team = Team.objects.get(id=id)
 
@@ -54,6 +60,7 @@ def update(request, id):
     return render(request, 'teams/form.html', {'team': team, 'form': form})
 
 @login_required
+@check_team_leader
 def set_player_position(request, id, player_id):
     try:
         team = Team.objects.get(id=id)
@@ -66,16 +73,20 @@ def set_player_position(request, id, player_id):
         return JsonResponse({'error': str(error)})
 
 @login_required
+@check_team_leader
 def invite_player(request, p_id):
-    try:
-        player = Player.objects.get(id=p_id)
-        PlayerInvite.objects.create(player=player, team=request.user.player.team)
-        return redirect('players:list')
-    except Exception as e:
-        return render(request, 'expections/show.html', {'error': e})
-
+    if request.user.player.team.players.all().count() < 22:
+        try:
+            player = Player.objects.get(id=p_id)
+            PlayerInvite.objects.create(player=player, team=request.user.player.team)
+            return redirect('players:list')
+        except Exception as e:
+            return render(request, 'expections/show.html', {'error': e})
+    else:
+        return render(request, 'expections/show.html', {'error': 'You not allowed to add more players, your team has reached the limit of its number of players.'})
 
 @login_required
+@check_team_leader
 def show_team_requests(request):
     try:
         requests = request.user.player.team.teamrequest_set.filter(checked=False)
@@ -84,30 +95,67 @@ def show_team_requests(request):
         return redirect('teams:list')
 
 @login_required
+@check_team_leader
 def accept_player(request, id):
-    player_request = TeamRequest.objects.get(id=id)
-    player_request.checked = True
-    player_request.save()
+    if request.user.player.team.players.all().count() < 22:
+        player_request = TeamRequest.objects.get(id=id)
+        player_request.checked = True
+        player_request.save()
 
-    player = player_request.player
+        player = player_request.player
 
-    team = request.user.player.team
-    team.players.add(player)
-    team.save()
+        team = request.user.player.team
+        team.players.add(player)
+        team.save()
 
-    return redirect('teams:show', team.id)
+        # send an email to notify the player that he's been accepted
+        msg = f"Congrats!, You have been accepted to join {team.name} as a player. \n Thank your for your time \n best wishes \n Local Football League"
+        try:
+            send_mail(
+                'notify about your team request',
+                msg,
+                settings.EMAIL_HOST_USER,
+                [player_request.player.user.email],
+                fail_silently=False,
+            )
+
+        except Exception as e:
+            return render(request, 'expections/show.html', {'error': e})
+
+
+        return redirect('teams:show', team.id)
+    else:
+        return render(request, 'expections/show.html', {
+            'error': 'You not allowed to add more players, your team has reached the limit of its number of players.'})
+
 
 @login_required
+@check_team_leader
 def reject_player(request, id):
     player_request = TeamRequest.objects.get(id=id)
     player_request.checked = True
     player_request.save()
     team = request.user.player.team
 
-    # we may send an email to notify the player that he's been rejected
+    #send an email to notify the player that he's been rejected
+    msg = f"unfortunately, You have been rejected to join {team.name}. you can try to send join requests to other teams from here: http://localfootballleague.pythonanywhere.com/teams/ as a player \n Thank your for your time \n best wishes \n Local Football League"
+    try:
+        send_mail(
+            'notify about your team request',
+            msg,
+            settings.EMAIL_HOST_USER,
+            [player_request.player.user.email],
+            fail_silently=False,
+        )
+
+    except Exception as e:
+        return render(request, 'expections/show.html', {'error': e})
+
+
     return redirect('teams:team_requests_list')
 
 @login_required
+@check_team_leader
 def invite_player_via_email(request, team_id):
     team = Team.objects.get(id=team_id)
     print(request.POST)

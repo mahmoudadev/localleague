@@ -6,7 +6,6 @@ from leagues.models import League
 from teams.models import Team
 
 
-@login_required
 def leagues_summary(request):
 
     leagues = League.objects.all()

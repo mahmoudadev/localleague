@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from sponsorships.models import SponsorshipPackge
+from core.decorators import *
 
 @login_required
+@check_sponsor
 def list(request):
     packages = SponsorshipPackge.objects.all()
 
@@ -10,6 +12,7 @@ def list(request):
 
 
 @login_required
+@check_sponsor
 def subscribe(request, id):
     try:
         print('subscribe view')

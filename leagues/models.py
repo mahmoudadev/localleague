@@ -133,12 +133,11 @@ def notify_team_leader(sender, instance, **kwargs):
     for team in teams:
         try:
 
-           s =  Standings.objects.get(team=team, league=instance)
-           print(s)
-           print('standings founded')
+           Standings.objects.get(team=team, league=instance)
+           print('standings found')
         except Exception as e:
-            print(str(e))
-            s = Standings.objects.create(team=team, league=instance)
+            print('creating new Standing..')
+            Standings.objects.create(team=team, league=instance)
 
         if not team.leader.user.participateinvite_set.filter(league=instance, team=team, checked=False):
                 print('team invitation sent')

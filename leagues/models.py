@@ -67,6 +67,9 @@ class Match(models.Model):
     class Meta:
         unique_together = ('away', 'home')
 
+    def match_teams(self):
+        return [self.home, self.away]
+
     def __str__(self):
         return f"Match {self.away.name} vs {self.home.name}"
 
@@ -123,17 +126,23 @@ def notify_sponsor_or_update_league(sender, instance, created, update_fields, **
                 ParticipateInvite.objects.create(league=instance, participant=sponsor.user)
 
 
-    if 'winner' in update_fields:
-        pass
-
 
 
 def notify_team_leader(sender, instance, **kwargs):
     teams = instance.teams.all()
     for team in teams:
-      if not team.leader.user.participateinvite_set.filter(league=instance, team=team, checked=False):
-            print('team invitation sent')
-            ParticipateInvite.objects.create(league=instance, team=team, participant=team.leader.user)
+        try:
+
+           s =  Standings.objects.get(team=team, league=instance)
+           print(s)
+           print('standings founded')
+        except Exception as e:
+            print(str(e))
+            s = Standings.objects.create(team=team, league=instance)
+
+        if not team.leader.user.participateinvite_set.filter(league=instance, team=team, checked=False):
+                print('team invitation sent')
+                ParticipateInvite.objects.create(league=instance, team=team, participant=team.leader.user)
 
 
 
@@ -144,7 +153,7 @@ def notify_landlord_or_update_match(sender, instance, created, update_fields, **
         if created or 'location' in update_fields:
             print('hit this line')
             landlord = instance.location.owner
-            if not  landlord.user.participateinvite_set.filter(league=instance.round.league,participant=landlord.user, match=instance, checked=False):
+            if not  landlord.user.participateinvite_set.filter(league=instance.round.league, participant=landlord.user, match=instance, checked=False):
                 print('landlord invite sent')
                 ParticipateInvite.objects.create(league=instance.round.league, match=instance, participant=landlord.user)
 

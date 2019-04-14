@@ -37,6 +37,27 @@ class UserProfileForm(forms.ModelForm):
         }
 
 
+
+class UserPlayerProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'photo',
+            'date_of_birth',
+            'phone',
+            'city',
+            'dist',
+            'street',
+        ]
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'class': 'datepicker'}),
+        }
+
+
 class PlayerForm(forms.ModelForm):
     class Meta:
         model = Player

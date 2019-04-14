@@ -1,10 +1,12 @@
+from django.contrib.auth.decorators import login_required
+
 from django.shortcuts import render, redirect
 from collections import OrderedDict
 from leagues.models import League
 from teams.models import Team
 
 
-
+@login_required
 def leagues_summary(request):
 
     leagues = League.objects.all()
@@ -29,7 +31,7 @@ def leagues_summary(request):
         leagues_data[league.name] = {}
         teams = {}
         for team in league.teams.all():
-            teams[team.name ] = team.standings_set.get(league=league)
+            teams[team.name] = team.standings_set.get(league=league)
 
         leagues_data[league.name] = teams
 

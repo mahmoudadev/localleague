@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from core.models import User, Player
 from teams.models import PlayerInvite, TeamRequest, Team
 
-
+@login_required
 def list(request):
     try:
         players = Player.objects.filter(is_teamleader=False)
@@ -11,13 +11,13 @@ def list(request):
     except Exception as e:
         return render(request, 'expections/show.html', {'error': e})
 
-
+@login_required
 def player_profile(request, id):
     person = User.objects.get(id=id)
-    return render(request, 'players/show.html', {'person': person })
+    return render(request, 'accounts/show.html', {'person': person })
 
 
-
+@login_required
 def accept_invite(request, id):
     invite_request = PlayerInvite.objects.get(id=id)
     invite_request.checked = True
@@ -28,7 +28,7 @@ def accept_invite(request, id):
     team.save()
     return redirect('teams:show', team.id)
 
-
+@login_required
 def reject_invite(request, id):
     invite_request = PlayerInvite.objects.get(id=id)
     invite_request.checked = True
@@ -36,7 +36,7 @@ def reject_invite(request, id):
     return redirect('league:requests')
 
 
-
+@login_required
 def team_request(request, id):
     try:
         team = Team.objects.get(id=id)

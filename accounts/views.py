@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from .forms import RegistraionForm
 from django.contrib.auth import authenticate, login
 from core.models import User
-from accounts.forms import UserProfileForm, PlayerForm, SponsorForm
+from accounts.forms import UserProfileForm, PlayerForm, SponsorForm, UserPlayerProfileForm
 
 def signup(request):
     form = RegistraionForm(request.POST or None)
@@ -32,7 +32,7 @@ def edit(request):
 
     person = request.user
 
-    if person.user_type == 'team_leader' or person.user_type == 'player':
+    if person.user_type == 'team_leader':
         user_form = UserProfileForm(request.POST or None, request.FILES or None, instance=person)
         player_form = PlayerForm(request.POST or None , instance=person.player)
         if user_form.is_valid() and player_form.is_valid():
@@ -40,6 +40,15 @@ def edit(request):
             player_form.save()
             return redirect('accounts:profile')
         return render(request, 'accounts/edit.html', {'person': person, 'user_form': user_form , 'additional_form': player_form})
+    elif person.user_type == 'player':
+        user_form = UserPlayerProfileForm(request.POST or None, request.FILES or None, instance=person)
+        player_form = PlayerForm(request.POST or None, instance=person.player)
+        if user_form.is_valid() and player_form.is_valid():
+            user_form.save()
+            player_form.save()
+            return redirect('accounts:profile')
+        return render(request, 'accounts/edit.html',
+                      {'person': person, 'user_form': user_form, 'additional_form': player_form})
 
     elif person.user_type == 'sponsor':
         user_form = UserProfileForm(request.POST or None, request.FILES or None, instance=person)

@@ -397,9 +397,9 @@
                 <th style="padding-right:20px;padding-left:20px;">League Won</th>
             </tr>
             <tr>
-                <td>1232</td>
+                <td>{{ team.get_points }}</td>
                 <td>{{ team.players.all|length }}/22</td>
-                <td> 0</td>
+                <td> {{ team.league_wons }}</td>
             </tr>
         </table>
     </div>

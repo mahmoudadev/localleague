@@ -4,12 +4,12 @@ from django.shortcuts import render, redirect
 from fields.models import Field, Image
 from .forms import FieldForm, ImageForm
 
-
+@login_required
 def list(request):
     fields = Field.objects.all()
     return render(request, 'fields/list.html', {'fields': fields})
 
-
+@login_required
 def create(request):
     ImageFormSet = modelformset_factory(Image,form=ImageForm, extra=3)
     field_form = FieldForm(request.POST or None)
@@ -30,14 +30,14 @@ def create(request):
 
     return render(request, 'fields/form.html', {'form': field_form, 'formset': formset})
 
-
+@login_required
 def show(request, id):
 
     item = Field.objects.get(id=id)
 
     return render(request, 'fields/show.html', {'item': item })
 
-
+@login_required
 def edit(request, id):
 
     instance_field = Field.objects.get(id=id)

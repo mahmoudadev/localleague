@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, reverse
 from django.conf import settings
 from paypal.standard.forms import PayPalPaymentsForm
@@ -7,6 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from leagues.models import League, ParticipateInvite, FieldReseravtion
 from fields.models import Field
 
+
+@login_required
 @csrf_exempt
 def payment_done(request, id):
     invite_request = ParticipateInvite.objects.get(id=id)
@@ -14,7 +17,7 @@ def payment_done(request, id):
     invite_request.save()
     return render(request, 'payment/done.html')
 
-
+@login_required
 @csrf_exempt
 def admin_payment_done(request, id):
     field_reservation = FieldReseravtion.objects.get(id=id)
@@ -23,12 +26,12 @@ def admin_payment_done(request, id):
     return render(request, 'payment/done.html')
 
 
-
+@login_required
 @csrf_exempt
 def payment_canceled(request):
     return render(request, 'payment/canceled.html')
 
-
+@login_required
 def payment_process(request, id, flag=None):
     try:
         invite_request = ParticipateInvite.objects.get(id=id)
@@ -58,7 +61,7 @@ def payment_process(request, id, flag=None):
     return render(request, "payment/process.html", context)
 
 
-
+@login_required
 def admin_payment_process(request, id):
     try:
         field_reservation = FieldReseravtion.objects.get(id=id)

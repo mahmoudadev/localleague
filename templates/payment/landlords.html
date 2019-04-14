@@ -9,28 +9,32 @@
 
     <div class="container">
         <div class="jumbotron">
-            <h2>{{ league.name }} Landlords  </h2>
+            <h2>{{ league.name }} Landlords </h2>
             <p>Pay all landlords whom participated to {{ league.name }}</p>
         </div>
-    <div class="row">
+        <div class="row">
 
 
-    {% for item in field_reservations %}
-        <div class="col-4">
-        <div class="card" style="width: 18rem;">
-          <img class="card-img-top" src="{{ item.match.location.image_set.first.image.url }}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">{{ item.landlord }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{ item.match }}</h6>
-                <p class="card-text">{{ item.match.location }}</p>
-                <a href="{% url 'payment:admin_process' id=item.id %}" class="card-link">Pay lease fees</a>
-            </div>
+            {% for item in field_reservations %}
+                <div class="col-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ item.match.location.image_set.first.image.url }}"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.landlord }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ item.match }}</h6>
+                            <p class="card-text">{{ item.match.location }}</p>
+                            <a href="{% url 'payment:admin_process' id=item.id %}" class="card-link">Pay lease fees</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="offset- col-8 ">
+                <p class="alert alert-info"> You don't any Field Reservations to pay its fees. </p>
+                </div>
+            {% endfor %}
         </div>
-        </div>
-
-    {% endfor %}
-</div>
-</div>
+    </div>
 
 
 {% endblock %}

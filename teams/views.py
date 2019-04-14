@@ -7,12 +7,12 @@ from core.models import Player
 from .forms import TeamForm
 from teams.models import Team, PlayerInvite, TeamRequest
 
-
+@login_required
 def list(request):
     teams = Team.objects.all()
     return render(request, 'teams/list.html', {'teams': teams})
 
-
+@login_required
 def create(request):
     print(request.POST)
     print(request.FILES)
@@ -33,12 +33,12 @@ def create(request):
 
     return render(request, 'teams/form.html', {'form': form})
 
-
+@login_required
 def show(request, id):
     team = Team.objects.get(id=id)
     return render(request, 'teams/show.html', {'team': team})
 
-
+@login_required
 def update(request, id):
     team = Team.objects.get(id=id)
 
@@ -53,7 +53,7 @@ def update(request, id):
 
     return render(request, 'teams/form.html', {'team': team, 'form': form})
 
-
+@login_required
 def set_player_position(request, id, player_id):
     try:
         team = Team.objects.get(id=id)
@@ -65,7 +65,7 @@ def set_player_position(request, id, player_id):
     except Exception as error:
         return JsonResponse({'error': str(error)})
 
-
+@login_required
 def invite_player(request, p_id):
     try:
         player = Player.objects.get(id=p_id)
@@ -83,7 +83,7 @@ def show_team_requests(request):
     except Exception as e:
         return redirect('teams:list')
 
-
+@login_required
 def accept_player(request, id):
     player_request = TeamRequest.objects.get(id=id)
     player_request.checked = True
@@ -97,7 +97,7 @@ def accept_player(request, id):
 
     return redirect('teams:show', team.id)
 
-
+@login_required
 def reject_player(request, id):
     player_request = TeamRequest.objects.get(id=id)
     player_request.checked = True
@@ -107,7 +107,7 @@ def reject_player(request, id):
     # we may send an email to notify the player that he's been rejected
     return redirect('teams:team_requests_list')
 
-
+@login_required
 def invite_player_via_email(request, team_id):
     team = Team.objects.get(id=team_id)
     print(request.POST)

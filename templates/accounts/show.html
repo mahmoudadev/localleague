@@ -33,17 +33,15 @@
 
 
                     <h2>{{ person }}</h2>
-                    {% if user.is_authenticated %}
-                        {% if user.user_type == 'team_leader' %}
+                        {% if person.user_type == 'team_leader' %}
                             <p class="badge-dark">Team Leader</p>
                         {% else %}
-                            <p class="badge-dark">{{ user.user_type|upper }}</p>
+                            <p class="badge-dark">{{ person.user_type|upper }}</p>
                         {% endif %}
-                    {% endif %}
 
 
                 </div>
-                </hr><br>
+                <hr><br>
 
                 {% if person.user_type == 'team_leader' or person.user_type == 'player' %}
 
@@ -55,15 +53,15 @@
 
 
                     <ul class="list-group mb-5">
-                        <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-                        <li class="list-group-item text-right"><span class="pull-left"><strong>Matches</strong></span>
-                            125
+                        <li class="list-group-item text-muted">Info <i class="fa fa-dashboard fa-1x"></i></li>
+                        <li class="list-group-item text-right"><span class="pull-left"><strong>Team</strong></span>
+                            {{ person.player.teams_as_player.first }}
                         </li>
-                        <li class="list-group-item text-right"><span class="pull-left"><strong>leagues</strong></span>
-                            13
+                        <li class="list-group-item text-right"><span class="pull-left"><strong>Leagues</strong></span>
+                            {{ person.player.teams_as_player.first.league_wons }}
                         </li>
-                        <li class="list-group-item text-right"><span class="pull-left"><strong>Team wins</strong></span>
-                            37
+                        <li class="list-group-item text-right"><span class="pull-left"><strong>Match Played</strong></span>
+                            {{ person.player.teams_as_player.first.get_matches|length }}
                         </li>
                     </ul>
                 {% elif person.user_type == 'sponsor' %}
@@ -166,7 +164,11 @@
                     </div>
                 </div>
                 <hr>
-                <div class="card-box">
+
+                {% if not person.user_type == 'player' %}
+
+
+                    <div class="card-box">
                     <div class="card-header">
                         <h3>Payment Details</h3>
                     </div>
@@ -189,7 +191,7 @@
                             </div>
                         </div>
                     </div>
-
+                {% endif %}
                 </div>
             </div>
 

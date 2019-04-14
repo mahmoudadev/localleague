@@ -22,11 +22,16 @@ class LeagueAdmin(admin.ModelAdmin):
                 update_fields.append('fees_per_team')
             if form.initial['sponsor'] != form.cleaned_data['sponsor'].id:
                 update_fields.append('sponsor')
-            if form.initial['winner'] != form.cleaned_data['winner'].id:
+            try:
+                winner = form.cleaned_data['winner'].id
+            except:
+                winner = None
+            if form.initial['winner'] != winner:
                 update_fields.append('winner')
 
-        obj.save(update_fields=update_fields)
-
+            obj.save(update_fields=update_fields)
+        else:
+            obj.save()
 
 admin.site.register(League, LeagueAdmin)
 
@@ -71,7 +76,9 @@ class MatchAdmin(admin.ModelAdmin):
             if form.initial['date'] != form.cleaned_data['date']:
                 update_fields.append('date')
 
-        obj.save(update_fields=update_fields)
+            obj.save(update_fields=update_fields)
+        else:
+            obj.save()
 
 
 

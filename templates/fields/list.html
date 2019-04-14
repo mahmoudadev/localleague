@@ -17,7 +17,9 @@
                 {% for field in fields %}
                     <div class="col-4">
                         <div class="card mt-5">
+                            {% if field.image_set.first.image %}
                             <img src="{{ field.image_set.first.image.url }}" class="card-img-top" alt="">
+                            {% endif %}
                             <div class="card-body">
                                 <h2>{{ field.name }}</h2>
                                 <p class="card-text">{{ field.description|truncatechars:100 }}</p>

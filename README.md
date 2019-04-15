@@ -9,6 +9,7 @@
  - install requirements `pip install -r requirements.txt`
  - run migrations `python manage.py migrate`
  - create your admin `python manage.py createsuperuser` and follow the prompt steps
+ - collect staticfiles via `python manage.py collectstatic`
  - run django server `python manage.py runserver` and enjoy!
  
  

@@ -9,10 +9,11 @@
         {% for request in requests %}
 
             <div class="row align-items-center mb-5 mt-5">
-                <div class="col text-center">
+                <div class="col pull-left">
                     <div class="content alert alert-info">
-                        <div class="col-6">
-                            <p>You have been invited to participate on {{ request.league.name }}</p>
+                        <div class="col-8">
+                            <p>You have been invited to participate on <b>{{ request.league.name }}</b> starts at <b>{{ request.league.starts_at }}</b>
+                                <br> <span class="text-muted">{{ request.league.description }}</span></p>
                             {% if user.user_type == 'landlord' %}
                                 <p> <span>Between : </span> {{ request.match }} on {{ request.match.date }}</p>
                             {% endif %}

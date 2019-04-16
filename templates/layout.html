@@ -67,6 +67,13 @@
             {% endif %}
 
 
+            {% if user.user_type == 'player' %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'players:list_team_invite' %}">Teams Requests</a>
+                </li>
+            {% endif %}
+
+
             {% if user.is_authenticated %}
 
                 <li class="nav-item">

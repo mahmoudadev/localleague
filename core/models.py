@@ -49,7 +49,7 @@ class Player(models.Model):
             else:
                 return False
         else:
-            if self.teams_as_player.all():
+            if self.teams_as_player.first():
                 return True
             else:
                 return False

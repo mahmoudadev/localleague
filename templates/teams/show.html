@@ -381,8 +381,12 @@
         {% if team.leader.user == request.user %}
             <a class="setting" href="{% url 'teams:update' team.id %}">Edit</a>
         {% else %}
-            {% if request.user.player not in team.players.all %}
-                <a class="setting" href="{% url 'players:team_request' team.id %}">Join this team</a>
+            {% if request.user.player not in team.players.all and request.user.user_type == 'player' %}
+                {% if not request.user.player.has_team %}
+                    <a class="setting" href="{% url 'players:team_request' team.id %}">Join this team</a>
+                {% else %}
+                    <p class="setting">You're Already in a team</p>
+                {% endif %}
             {% endif %}
         {% endif %}
         <img src="{{ team.logo.url }}" style="width:250px;height:250px;margin:85px;">
@@ -458,9 +462,9 @@
 
         </div>
         <div class="row">
-        <div class="col-12 text-center">
-            <p class="alert alert-info d-none" id="mesg"></p>
-        </div>
+            <div class="col-12 text-center">
+                <p class="alert alert-info d-none" id="mesg"></p>
+            </div>
         </div>
     {% endif %}
 
@@ -473,7 +477,7 @@
                 <label style=" font-size:20px;border-bottom: 1px solid black;padding: 0 40px;">Enter Email</label><br>
                 <input type="email" id="player_email" placeholder="example@example.com">
                 <br>
-                <a href="#" id="invite_via_email"  class="submit" style="color: #fff;">Send</a>
+                <a href="#" id="invite_via_email" class="submit" style="color: #fff;">Send</a>
             </form>
         </div>
     </div>

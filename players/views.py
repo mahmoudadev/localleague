@@ -77,3 +77,8 @@ def team_request(request, id):
         return redirect('teams:list')
     except Exception as e:
         return render(request, 'expections/show.html', {'error': e})
+
+
+def list_team_invite(request):
+    requests = request.user.player.playerinvite_set.filter(checked=False)
+    return render(request, 'requests/team_join_requests.html', {'requests': requests})

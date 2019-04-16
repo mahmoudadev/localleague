@@ -12,12 +12,6 @@ from core.decorators import *
 
 @login_required
 def invite_requests(request):
-    if request.user.user_type == 'player':
-        print('player')
-        requests = request.user.player.playerinvite_set.filter(checked=False)
-        print(requests)
-        return render(request, 'requests/team_join_requests.html', {'requests': requests})
-    else:
         requests = request.user.participateinvite_set.filter(checked=False)
         return render(request, 'requests/list.html', {'requests': requests})
 

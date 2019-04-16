@@ -12,7 +12,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #17a2b8;
+            background-color: #142E20;
             height: 100vh;
         }
 
@@ -20,7 +20,7 @@
             margin-top: 120px;
             max-width: 600px;
             height: auto;
-            border: 1px solid #9C9C9C;
+            border: 1px solid #EAEAEA;
             background-color: #EAEAEA;
         }
 
@@ -41,15 +41,15 @@
             <div id="login-column" class="col-md-6">
                 <div id="login-box" class="col-md-12">
                     <form id="login-form" class="form" action="{% url 'login' %}" method="post">
-                        <h3 class="text-center text-info">Login</h3>
+                        <h3 class="text-center text-success">Login</h3>
                         {% csrf_token %}
                         {{ form|crispy }}
                         <div class="form-group">
-                            <input type="submit" name="submit" class="btn btn-info btn-md" value="Login">
+                            <input type="submit" name="submit" class="btn btn-success btn-md" value="Login">
                         </div>
 
                         <div id="register-link" class="text-right">
-                            <a href="{% url 'accounts:signup' %}" class="text-info">Register here</a>
+                            <a href="{% url 'accounts:signup' %}" class="text-success">Register here</a>
                         </div>
                     </form>
                 </div>

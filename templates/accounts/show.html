@@ -12,7 +12,7 @@
         {% if person == request.user %}
             <div class="row">
                 <div class="col-12">
-                    <a href="{% url 'accounts:edit_profile' %}" class=" btn btn-primary pull-right">Edit Profile</a>
+                    <a href="{% url 'accounts:edit_profile' %}" class=" btn btn-success pull-right">Edit Profile</a>
                 </div>
             </div>
         {% endif %}
@@ -47,7 +47,7 @@
 
 
                     <div class="panel panel-default text-center mb-5">
-                        <div class="panel-heading badge-info"> Position <i class="fa fa-link fa-1x"></i></div>
+                        <div class="panel-heading badge-info" style="background:#1A9E42"> Position <i class="fa fa-link fa-1x"></i></div>
                         <div class="panel-body">{{ person.player.position }}</div>
                     </div>
 

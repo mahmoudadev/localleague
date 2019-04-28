@@ -33,6 +33,7 @@
                 <ul>
                     <li><span class="pr-3">Area</span> <span class="text-muted">{{ item.area }}</span></li>
                     <li><span class="pr-3">Location</span> <span class="text-muted">{{ item.location }}</span></li>
+                     <li><span class="pr-3">Price</span> <span class="text-muted">{{ item.price }}</span></li>
                     <li><span class="pr-3">Owner</span> <a href="{% url 'players:show_profile' item.owner.user.id %}"
                                                            class="text-muted">{{ item.owner.user }}</a></li>
                 </ul>

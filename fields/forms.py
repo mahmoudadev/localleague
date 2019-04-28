@@ -10,9 +10,10 @@ class FieldForm(forms.ModelForm):
             'name',
             'description',
             'area',
+            'price',
             'location',
 
-        ]
+            ]
 
 
 
